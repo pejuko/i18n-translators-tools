@@ -20,8 +20,8 @@ spec = Gem::Specification.new do |s|
   s.executables = ["i18n-translate"]
   s.description = <<EOF
 This package brings you useful utility which can help you to handle locale files
-and translations in your Ruby projects. Read README.md file and run i18n-translate
-without parameters for more information.
+and translations in your Ruby projects. Offers also built-in simple console editor.
+Read README.md file and run i18n-translate without parameters for more information.
 EOF
 end
 
