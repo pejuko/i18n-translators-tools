@@ -1,0 +1,32 @@
+
+msgctxt "changed.interpolation"
+msgid "Interpolated changed text '%{var}'"
+msgstr "Interpolovaný změněný text '%{var}'"
+
+msgctxt "changed.plural.one"
+msgid "Changed plural one text"
+msgstr "Změněný plurál text"
+
+msgctxt "changed.plural.other"
+msgid "Changed plural other texts"
+msgstr "Změněný plurál textů"
+
+msgctxt "changed.simple"
+msgid "Changed simple text"
+msgstr "Změněný jednoduchý text"
+
+msgctxt "simple.interpolation"
+msgid "Interpolated text '%{var}'"
+msgstr "Interpolovaný text '%{var}'"
+
+msgctxt "simple.plural.one"
+msgid "One item"
+msgstr "Jedna položka"
+
+msgctxt "simple.plural.other"
+msgid "Many items"
+msgstr "Mnoho položek"
+
+msgctxt "simple.text"
+msgid "Text to translate"
+msgstr "Text k přeložení"

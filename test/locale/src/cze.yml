@@ -1,0 +1,22 @@
+---
+cze:
+  simple:
+    text: Text k přeložení
+    interpolation: "Interpolovaný text '%{var}'"
+    plural:
+      one: Jedna položka
+      other: Mnoho položek
+  changed:
+    simple:
+      default: Changed simple text
+      t: Změněný jednoduchý text
+    interpolation:
+      default: "Interpolated changed text '%{var}'"
+      t: "Interpolovaný změněný text '%{var}'"
+    plural:
+      one:
+        default: Changed plural one text
+        t: Změněný plurál text
+      other:
+        default: Changed plural other texts
+        t: Změněný plurál textů
