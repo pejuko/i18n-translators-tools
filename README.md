@@ -223,7 +223,7 @@ Configure file format
 Configuration files are normal ruby files which should return hash.
 It is not necessary to use all switches.
 
-*Example config file:*
+**Example config file:**
 
     {
       :exclude => ['rules'],
