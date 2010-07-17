@@ -34,7 +34,7 @@ module I18n::Translate::Processor
         when %r{^# (.*)$}
           entry["comment"] = $1.to_s.strip
 
-        # translator's comment
+        # reference
         when %r{^#: (.*)$}
           entry["line"] = $1.to_s.strip
 
