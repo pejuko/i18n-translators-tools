@@ -50,8 +50,8 @@ module I18n::Translate::Processor
           end
 
         # old default
-        when %r{^#\| msgid (.*)$}
-          entry["old"] = $1.to_s.strip
+        when %r{^#\| msgid "(.*)"$}
+          entry["old"] = $1.to_s
 
         # key
         when %r{^msgctxt "(.*)"$}
@@ -61,19 +61,19 @@ module I18n::Translate::Processor
         # default
         when %r{^msgid "(.*)"$}
           last = "default"
-          entry[last] = $1.to_s.strip
+          entry[last] = $1.to_s
 
         # translation
         when %r{^msgstr "(.*)"$}
           last = "t"
-          entry[last] = $1.to_s.strip
+          entry[last] = $1.to_s
 
         # string continuation
         when %r{^"(.*)"$}
           if last == "key"
-            key = "#{key}#{$1.to_s.strip}"
+            key = "#{key}#{$1}"
           elsif last
-            entry[last] = "#{entry[last]}#{$1.to_s.strip}"
+            entry[last] = "#{entry[last]}#{$1}"
           end
         end
       end
@@ -108,7 +108,7 @@ module I18n::Translate::Processor
           flags << "fuzzy" if value["fuzzy"]
           flags << value["flag"] unless value["flag"].to_s.strip.empty?
           entry << %~#, #{flags.join(", ")}~ unless flags.empty?
-          entry << %~#| msgid #{value["old"]}~ unless value["old"].to_s.empty?
+          entry << %~#| msgid #{value["old"].to_s.inspect}~ unless value["old"].to_s.empty?
           entry << %~msgctxt #{key.inspect}~
           entry << %~msgid #{value["default"].to_s.inspect}~
           entry << %~msgstr #{value["t"].to_s.inspect}~
