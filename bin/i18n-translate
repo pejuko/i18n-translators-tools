@@ -45,6 +45,7 @@ options:
   --locale=<locale>, -l <locale>      -- work with specific locale only
                                          e.g: create -p locale -l cs_CZ
   --deep, -r                          -- scan locale_dir recursively
+  --encoding, -e                      -- set encoding of files (default: utf-8)
   --quiet, -q                         -- show less information
   --verbose, -v                       -- shows more information during
                                          locales processing
@@ -149,6 +150,7 @@ opts = GetoptLong.new(
   ["--separator", "-s", GetoptLong::REQUIRED_ARGUMENT],
   ["--target", "-t", GetoptLong::REQUIRED_ARGUMENT],
   ["--deep", "-r", GetoptLong::NO_ARGUMENT],
+  ["--encoding", "-e", GetoptLong::REQUIRED_ARGUMENT],
   ["--verbose", "-v", GetoptLong::NO_ARGUMENT],
   ["--quiet", "-q", GetoptLong::NO_ARGUMENT],
   ["--locale", "-l", GetoptLong::REQUIRED_ARGUMENT]
