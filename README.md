@@ -70,6 +70,21 @@ WARNING
   back. Then you lose nothing.
 
 
+Installation
+------------
+
+**RubyGems**
+
+    gem install i18n-translators-tools
+
+**Latest from sources***
+
+    git clone git://github.com/pejuko/i18n-translators-tools.git
+    cd i18n-translators-tools
+    rake gem
+    gem install pkg/i18n-translators-tools.gem
+
+
 How to add support into your application
 ----------------------------------------
 
@@ -145,12 +160,12 @@ Supported formats
 
 * **po**; supported format looks like
 
-	#  there is some comment
-	#, fuzzy, changed
-	#| msgid Old default
-	msgctxt "there.is.some.key"
-	msgid "Default text"
-	msgstr "Prelozeny defaultni text"
+		#  there is some comment
+		#, fuzzy, changed
+		#| msgid Old default
+		msgctxt "there.is.some.key"
+		msgid "Default text"
+		msgstr "Prelozeny defaultni text"
 
   Such po file is pretty usable with po editors.
 
