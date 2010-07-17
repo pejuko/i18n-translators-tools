@@ -53,7 +53,7 @@ module I18n::Translate::Processor
         when %r{^#\| msgid "(.*)"$}
           entry["old"] = $1.to_s
 
-        # key
+        # key (context)
         when %r{^msgctxt "(.*)"$}
           key = $1.to_s.strip
           last = "key"

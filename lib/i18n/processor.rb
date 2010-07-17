@@ -68,7 +68,7 @@ module I18n::Translate
       end
 
       def self.can_handle?(fname)
-        fname =~ %r{\.([^\.]+)$}
+        fname =~ %r{\.([^\.]+)$}i
         self::FORMAT.include?($1)
       end
 
@@ -96,4 +96,5 @@ end
 require 'i18n/processor/yaml'
 require 'i18n/processor/ruby'
 require 'i18n/processor/gettext'
+require 'i18n/processor/ts'
 
