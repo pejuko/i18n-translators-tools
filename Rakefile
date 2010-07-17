@@ -9,9 +9,9 @@ require 'rake/clean'
 
 CLEAN << "coverage" << "pkg"
 
-task :default => [:test]
+task :default => [:test, :gem]
 Rake::TestTask.new(:test) do |t|
-  t.pattern = File.join(File.dirname(__FILE__), 'test/tc_*.rb')
+  t.pattern = File.join(File.dirname(__FILE__), 'test/all.rb')
   t.verbose = true
 end
 

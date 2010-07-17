@@ -3,88 +3,13 @@
 # 
 # @author: Petr Kovar <pejuko@gmail.com>
 #
-require 'test/unit'
-require 'rubygems'
-require 'yaml'
-
-$:.unshift File.expand_path(File.join(File.dirname(__FILE__), ".."))
-require 'lib/i18n-translate'
-
-
-
-$current_dir = File.expand_path(File.dirname(__FILE__))
-$src_dir = File.join($current_dir, 'locale/src')
-$trg_dir = File.join($current_dir, 'locale/trg')
-
-
-def load_yml(default, cze)
-  [YAML.load(File.read(default))["default"], YAML.load(File.read(cze))["cze"]]
-end
-
-def load_src
-  load_yml("#{$src_dir}/default.yml", "#{$src_dir}/cze.yml")
-end
-
-def load_trg
-  load_yml("#{$trg_dir}/default.yml", "#{$trg_dir}/cze.yml")
-end
-
-def load_src_trg
-  res = {}
-  res[:src] = load_src
-  res[:trg] = load_trg
-  res
-end
-
-
-I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
-I18n::Backend::Simple.send(:include, I18n::Backend::Translate)
-I18n.default_locale = 'default'
-I18n.locale = 'cze'
-
-
-class TestTranslatorPlugin < Test::Unit::TestCase
-
-  def setup
-    I18n.load_path << Dir[ "#{$src_dir}/*.yml" ]
-    I18n.reload!
-  end
-
-  def test_0010_I18n_plugin_simple_text
-    assert_equal( "Text k přeložení", I18n.t("simple.text") )
-  end
-
-  def test_0020_I18n_plugin_plural_text
-    assert_equal( "Jedna položka", I18n.t("simple.plural", :count => 1) )
-    assert_equal( "Mnoho položek", I18n.t("simple.plural", :count => 9))
-  end
-
-  def test_0030_I18n_plugin_interpolation
-    assert_equal( "Interpolovaný text 'ahoj'", I18n.t("simple.interpolation", :var => "ahoj"))
-  end
-
-  def test_0040_I18n_plugin_translate_simple
-    assert_equal( "Změněný jednoduchý text", I18n.t("changed.simple"))
-  end
-
-  def test_0050_I18n_plugin_translate_plural
-    assert_equal( "Změněný plurál text", I18n.t("changed.plural", :count => 1))
-    assert_equal( "Změněný plurál textů", I18n.t("changed.plural", :count => 9))
-  end
-
-  def test_0060_I18n_plugin_translate_interpolation
-    assert_equal( "Interpolovaný změněný text 'ahoj'", I18n.t("changed.interpolation", :var => "ahoj"))
-  end
-
-end
-
 
 class TestTranslate < Test::Unit::TestCase
   def setup
     @opts = {:locale_dir => $src_dir, :format => 'yml', :default_format => 'yml'}
     @t = I18n::Translate::Translate.new('cze', @opts)
     @t.options[:locale_dir] = $trg_dir
-    I18n.load_path << Dir[ "#{$src_dir}/*.yml" ]
+    I18n.load_path = Dir[ "#{$src_dir}/*.yml" ]
     I18n.reload!
   end
 
