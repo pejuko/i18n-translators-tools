@@ -14,10 +14,10 @@ require 'i18n/processor'
 #   I18n::Backend::Simple.send(:include, I18n::Backend::Translate)
 #   I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
 #
-# notice that Translator have to be included BEFORE Fallback otherwise
+# notice that Translator have to be included BEFORE Fallbacks otherwise
 # the fallback will get Hash (even with empty translation) and won't work.
 #
-# It is hightly recommended to use Fallback backend together with Translate.
+# It is hightly recommended to use Fallbacks backend together with Translate.
 # If you have experienced nil or empty translations this can fix the problem.
 #
 # Format of entry:

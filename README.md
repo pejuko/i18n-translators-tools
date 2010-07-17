@@ -119,6 +119,14 @@ and then you can use
 
 as usual.
 
+Notice that Translator have to be included BEFORE Fallbacks
+otherwise the fallback will get Hash (even with empty translation)
+and won't work.
+
+It is hightly recommended to use Fallbacks backend together with
+Translate. If you have experienced nil or empty translations due to
+untranslated strings this can fix the problem.
+
 
 Examples
 --------
