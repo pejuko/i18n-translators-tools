@@ -17,7 +17,8 @@ spec = Gem::Specification.new do |s|
   s.add_dependency('i18n', '>= 0.4.1')
   s.add_dependency('ya2yaml')
   s.require_path = 'lib'
-  s.files = ["bin/i18n-translate", "test/tc_translate.rb", "test/locale/src/default.yml", "test/locale/src/cze.yml", "test/locale/src/cze.rb", "test/locale/src/cze.po", "lib/i18n-translate.rb", "lib/i18n/translate.rb", "lib/i18n/processor.rb", "lib/i18n/processor/yaml.rb", "lib/i18n/processor/ruby.rb", "lib/i18n/processor/gettext.rb", "lib/i18n/backend/translate.rb", "README.md", "i18n-translators-tools.gemspec", "Rakefile"]
+  s.files = ["bin/i18n-translate", "README.md", "i18n-translators-tools.gemspec", "Rakefile"]
+  s.files += Dir["lib/**/*.rb", "test/**/*.{rb,yml,po}"]
   s.executables = ["i18n-translate"]
   s.description = <<EOF
 This package brings you useful utility which can help you to handle locale files
