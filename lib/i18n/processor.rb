@@ -53,12 +53,18 @@ module I18n::Translate
       end
 
       def read
-        data = File.open(@filename, mode("r")){ |f| f.read }
+        data = File.open(@filename, mode("r")) do |f|
+          f.flock File::LOCK_SH
+          f.read
+        end
         import(data)
       end
 
       def write(data)
-        File.open(@filename, mode("w")) {|f| f << export(data)}
+        File.open(@filename, mode("w")) do |f|
+          f.flock File::LOCK_EX
+          f << export(data)
+        end
       end
 
       def self.can_handle?(fname)
