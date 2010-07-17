@@ -6,8 +6,6 @@
 require 'fileutils'
 require 'find'
 
-require 'i18n/processor'
-
 # I18n::Translate introduces new format for translations. To make
 # I18n.t work properly you need to include Translator's backend:
 #
@@ -151,14 +149,15 @@ module I18n::Translate
     # loads default and lang files
     def initialize(lang, opts={})
       @lang = lang.to_s
-      raise "Empty locale" if @lang.empty?
+      raise "Empty locale" if @lang.empty? and not opts[:empty]
       @options = DEFAULT_OPTIONS.merge(opts)
       @options[:default_format] ||= @options[:format]
 
-      @default, @default_file = load_locale( @options[:default], @options[:default_format] )
-      @target, @lang_file = load_locale( @lang )
-
-      merge!
+      if @lang and not opts[:empty]
+        @default, @default_file = load_locale( @options[:default], @options[:default_format] )
+        @target, @lang_file = load_locale( @lang )
+        merge!
+      end
     end
 
     # check if the file has supported format
