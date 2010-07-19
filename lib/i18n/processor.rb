@@ -82,6 +82,22 @@ module I18n::Translate
         data
       end
 
+      # convert old and shorthand fields
+      def migrate(data)
+        keys = I18n::Translate.hash_to_keys(data, @translate.options[:separator])
+        keys.each do |key|
+          k, prop = $1, $2 if key =~ /(.*)\.([^\.]+)$/
+          next unless prop or k
+          next unless ["old", "t"].include?(prop)
+          entry = I18n::Translate.find(k, data, @translate.options[:separator])
+          value = entry.delete(prop)
+          prop = (prop == "old") ? "old_default" : "translation"
+          entry[prop] = value
+          I18n::Translate.set(k, entry, data, @translate.options[:separator])
+        end
+        data
+      end
+
       def mode(m)
         mode = m.dup
         mode << ":" << @translate.options[:encoding] if defined?(Encoding)

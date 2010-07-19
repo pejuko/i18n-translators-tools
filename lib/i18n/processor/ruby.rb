@@ -11,7 +11,7 @@ module I18n::Translate::Processor
   protected
 
     def import(data)
-      eval(data)
+      migrate(eval(data))
     end
 
     # serialize hash to string

@@ -48,9 +48,9 @@ EOF
       <message>
           <source>#{::CGI.escapeHTML(value["default"].to_s)}</source>
 EOF
-          unless value["old"].to_s.empty?
+          unless value["old_default"].to_s.empty?
             xml += <<EOF
-          <oldsource>#{::CGI.escapeHTML(value["old"].to_s)}</oldsource>
+          <oldsource>#{::CGI.escapeHTML(value["old_default"].to_s)}</oldsource>
 EOF
           end
           unless value["comment"].to_s.empty?

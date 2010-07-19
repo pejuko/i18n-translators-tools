@@ -13,7 +13,7 @@ module I18n::Translate::Processor
   protected
 
     def import(data)
-      ::YAML.load(data)
+      migrate(::YAML.load(data))
     end
 
     def export(data)

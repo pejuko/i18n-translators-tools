@@ -25,8 +25,8 @@ class TestTranslate < Test::Unit::TestCase
   def test_0020_merge_simple
     assert_equal( { "key" => "simple.text",
                     "default" => "Text to translate",
-                    "t" => "Text k přeložení",
-                    "old_t" => "",
+                    "translation" => "Text k přeložení",
+                    "old_translation" => "",
                     "old_default" => "",
                     "comment" => "",
                     "flag" => "ok" }, @t["simple.text"] )
@@ -35,8 +35,8 @@ class TestTranslate < Test::Unit::TestCase
   def test_0030_merge_changed
     assert_equal( { "key" => "changed.simple",
                     "default" => "This text is newer and changed",
-                    "t" => "",
-                    "old_t" => "Změněný jednoduchý text",
+                    "translation" => "",
+                    "old_translation" => "Změněný jednoduchý text",
                     "old_default" => "Changed simple text",
                     "comment" => "",
                     "flag" => "changed" }, @t["changed.simple"] )
@@ -47,16 +47,16 @@ class TestTranslate < Test::Unit::TestCase
     entry = @t.find("simple.text", @t.target )
 
     assert( entry.kind_of?(Hash) )
-    assert_equal( { "t" => "Text k přeložení",
-                    "old" => "",
+    assert_equal( { "translation" => "Text k přeložení",
+                    "old_default" => "",
                     "default" => "Text to translate",
                     "comment" => "",
                     "flag" => "ok"
                   }, entry )
 
     entry = @t.find("changed.simple", @t.target )
-    assert_equal( { "t" => "Změněný jednoduchý text",
-                    "old" => "Changed simple text",
+    assert_equal( { "translation" => "Změněný jednoduchý text",
+                    "old_default" => "Changed simple text",
                     "default" => "This text is newer and changed",
                     "comment" => "",
                     "flag" => "changed",
@@ -84,7 +84,7 @@ class TestTranslate < Test::Unit::TestCase
     tpo = I18n::Translate::Translate.new('cze', @opts.merge({:format => 'po'}))
     assert(tpo.kind_of?(I18n::Translate::Translate))
     assert_equal(File.join(File.expand_path($src_dir), 'cze.po'), tpo.lang_file)
-    assert_equal(["changed.interpolation.default", "changed.interpolation.t", "changed.plural.one.default", "changed.plural.one.t", "changed.plural.other.default", "changed.plural.other.t", "changed.simple.default", "changed.simple.t", "simple.interpolation.default", "simple.interpolation.t", "simple.plural.one.default", "simple.plural.one.t", "simple.plural.other.default", "simple.plural.other.t", "simple.text.default", "simple.text.t"], I18n::Translate.hash_to_keys(tpo.target, ".").sort)
+    assert_equal(["changed.interpolation.default", "changed.interpolation.translation", "changed.plural.one.default", "changed.plural.one.translation", "changed.plural.other.default", "changed.plural.other.translation", "changed.simple.default", "changed.simple.translation", "simple.interpolation.default", "simple.interpolation.translation", "simple.plural.one.default", "simple.plural.one.translation", "simple.plural.other.default", "simple.plural.other.translation", "simple.text.default", "simple.text.translation"], I18n::Translate.hash_to_keys(tpo.target, ".").sort)
   end
 
 end

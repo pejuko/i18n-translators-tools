@@ -63,12 +63,11 @@ WARNING
   If you are converting from po origin files then you can lose header of the
   file, pluralization, extracted comments, some flags (fuzzy will stay) and
   previous-context. Strings over multiple lines are supported, however.
-* **po files are not compatible with I18n::Gettext.** The main purpose of
-  enabling conversions to po files is effort to allow usage of many po editors
-  for ruby projects. It is supposed that you will keep your files in yml (rb)
-  and conversions will be used only for translators and then you convert it
-  back. Then you lose nothing.
-
+* **po files are not compatible with I18n::Backedn::Gettext.** The main purpose
+  of enabling conversions to po files is effort to allow usage of many po
+  editors for ruby projects. You can either keep all your files in yml and
+  convert them only for translators and then back or you can have default in
+  yml and other locales in po files. i18-translate tool will take care of it.
 
 Installation
 ------------
@@ -153,6 +152,12 @@ with locales 'locale/de_DE.yml', 'locale/cs_CZ.yml' and 'locale/extra/cs_CZ.yml'
     locale/cs_CZ.yml...65% (650/1000)
     locale/de_DE.yml...90% (900/1000)
 
+**PO locales and default.yml**
+
+    $> i18n-translate merge
+    locale/cs_CZ.po...merged
+    locale/de_DE.po...merged
+
 **Translate more entries (built-in translator invocation):**
 
     $> i18n-translate translate -l cs_CZ
@@ -177,8 +182,15 @@ Supported formats
 
   Such po file is pretty usable with po editors.
 
+  To use po files generated (e.g: by merge) with i18n-translate you should
+  include this backend istead of I18n::Backend::Gettext
+ 
+      I18n::Backend::Simple.send(:include, I18n::Backend::PO)
+
 * **yml**; standard yaml files in I18n simple format
 * **rb**; typical ruby files in I18n simple format
+* **ts**; QT Linguist TS format. If you are planing to do translation in
+  qt linguist, convert to this format rather then to po.
 
 
 New locale files format
@@ -197,10 +209,10 @@ or for pluralization (depends on rules) it can be similar to this:
 New format looks like:
 
     key:
-      old: "old default string"
+      old_default: "old default string"
       default: "new default string"
       comment: "translator's comments"
-      t: "translation itself"
+      translation: "translation itself"
       flag: "one of (ok || incomplete || changed || untranslated)"
       fuzzy: true # exists only where flag != ok (nice to have when you want
                     edit files manually)
@@ -209,14 +221,14 @@ Pluralized variant should look like:
 
     key:
       one:
-        old:
+        old_default:
         default:
-        t:
+        translation:
         ...
       other:
-        old:
+        old_default:
         default:
-        t:
+        translation:
         ...
 
 As you can see the old format is string and the new format is hash.

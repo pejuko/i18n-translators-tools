@@ -20,9 +20,9 @@ module I18n
       def translate(locale, key, options = {})
         result = super(locale, key, options)
         return result unless result.kind_of?(Hash)
-        return nil unless result[:t]
+        return nil unless result[:t] or result[:translation]
 
-        tr = result[:t]
+        tr = result[:translation] || result[:t]
         values = options.except(*I18n::Backend::Base::RESERVED_KEYS)
 
         tr = resolve(locale, key, tr, options)

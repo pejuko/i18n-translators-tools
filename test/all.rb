@@ -15,7 +15,9 @@ $src_dir = File.join($current_dir, 'locale/src')
 $trg_dir = File.join($current_dir, 'locale/trg')
 
 def load_yml(default, cze)
-  [YAML.load(File.read(default))["default"], YAML.load(File.read(cze))["cze"]]
+  tr = I18n::Translate::Translate.new('default', {:empty => true})
+  [ I18n::Translate::Processor.read(default, tr)["default"],
+    I18n::Translate::Processor.read(cze, tr)["cze"] ]
 end
 
 def load_src

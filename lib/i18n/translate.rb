@@ -20,11 +20,14 @@ require 'find'
 #
 # Format of entry:
 #
-#   old: old default string
+#   old_default: old default string
 #   default: new default string
 #   comment: translator's comments
-#   t: translation
-#   line: the lines, where is this key used # not implemented yet
+#   translation: translation itself (optionaly in the file can be just t as
+#                a shorthand, however, the tools will allways write translation)
+#   extracted_comment: po compatibility
+#   file: file where it is # po compatibility
+#   line: the lines, where is this key used #  po compatibility
 #   flag: ok || incomplete || changed || untranslated
 #   fuzzy: true # exists only where flag != ok (nice to have when you want
 #                 edit files manualy)
@@ -33,20 +36,20 @@ require 'find'
 #
 #  key:
 #    one:
-#      old:
+#      old_default:
 #      default:
-#      t:
+#      translation:
 #      ...
 #    other:
-#      old:
+#      old_default:
 #      default:
-#      t:
+#      translation:
 #      ...
 #
 module I18n::Translate
 
   FLAGS = %w(ok incomplete changed untranslated)
-  FORMATS = %w(yml rb po)       # the first one is preferred if :format => auto
+  FORMATS = %w(yml rb po ts)       # the first one is preferred if :format => auto
 
   # returns flat array of all keys e.g. ["system.message.ok", "system.message.error", ...]
   def self.hash_to_keys(hash, separator=".", prefix="")
@@ -174,19 +177,17 @@ module I18n::Translate
 
     # will merge only one key and returns hash
     #   {
-    #     :key => 'key',
-    #     :default => '',              # value set in default file
-    #     :old_default => '',          # value set as old in target file
+    #     'key' => 'key',
+    #     'default' => '',              # value set in default file
+    #     'old_default' => '',          # value set as old in target file
     #                                    (value from default file from last translation
-    #                                     if the field has changed)
-    #     :old_t => '',                # if flag == 'changed' then old_t = t and t = ''
-    #     :t => '',                    # value set in target file
-    #     :line => 'some/file.rb: 44', # name of source file and number of line
-    #                                    (a copy in target file from default file)
-    #                                    !!! line is unused for now
-    #     :comment => ''               # a comment added by a translator
-    #     :flag => ok || incomplete || changed || untranslated    # set by merging tool except incomplete
+    #                                    if the field has changed)
+    #     'old_translation' => '',      # if flag == 'changed' then old_translation = t and t = ''
+    #     'translation' => '',          # value set in target file
+    #     'comment' => ''               # a comment added by a translator
+    #     'flag' => ok || incomplete || changed || untranslated    # set by merging tool except incomplete
     #                                                               which is set by translator
+    #    # other keys helded for compatibility with other formats
     #   }
     def [](key)
       d = I18n::Translate.find(key, @default, @options[:separator])
@@ -198,10 +199,10 @@ module I18n::Translate
       trg = I18n::Translate.find(key, @target, @options[:separator])
       if (not trg) or
          (trg.kind_of?(String) and trg.strip.empty?) or
-         (trg.kind_of?(Hash) and trg["t"].to_s.strip.empty?)
+         (trg.kind_of?(Hash) and trg["translation"].to_s.strip.empty?)
         entry["old_default"] = ""
-        entry["old_t"] = ""
-        entry["t"] = ""
+        entry["old_translation"] = ""
+        entry["translation"] = ""
         entry["comment"] = trg.kind_of?(Hash) ? trg["comment"].to_s.strip : ""
         entry["flag"] = "untranslated"
         return entry
@@ -209,24 +210,24 @@ module I18n::Translate
 
       # default has changed => new translation is probably required
       if trg.kind_of?(Hash)
-        entry["old_t"] = trg["t"].to_s.strip
-        entry["t"] = ""
+        entry["old_translation"] = trg["translation"].to_s.strip
+        entry["translation"] = ""
         entry["comment"] = trg["comment"].to_s.strip
         entry["flag"] = "changed"
 
         if d != trg["default"]
           entry["old_default"] = trg["default"].to_s.strip
           return entry
-        elsif not trg["old"].to_s.strip.empty?
-          entry["old_default"] =  trg["old"].to_s.strip
+        elsif not trg["old_default"].to_s.strip.empty?
+          entry["old_default"] =  trg["old_default"].to_s.strip
           return entry
         end
       end
 
       # nothing has changed 
-      entry["old_default"] = trg.kind_of?(Hash) ? trg["old"].to_s.strip : ""
-      entry["old_t"] = ""
-      entry["t"] = trg.kind_of?(Hash) ? trg["t"].to_s.strip : trg.to_s.strip
+      entry["old_default"] = trg.kind_of?(Hash) ? trg["old_default"].to_s.strip : ""
+      entry["old_translation"] = ""
+      entry["translation"] = trg.kind_of?(Hash) ? trg["translation"].to_s.strip : trg.to_s.strip
       entry["comment"] = trg.kind_of?(Hash) ? trg["comment"].to_s.strip : ""
       entry["flag"] = (trg.kind_of?(Hash) and trg["flag"]) ? trg["flag"].to_s.strip : "ok"
 
@@ -260,8 +261,8 @@ module I18n::Translate
           key, values = transl
         end
 
-        old_t = values["old_t"].to_s.strip
-        new_t = values["t"].to_s.strip
+        old_t = values["old_translation"].to_s.strip
+        new_t = values["translation"].to_s.strip
         default = values["default"].to_s.strip
         old_default = values["old_default"].to_s.strip
         flag = values["flag"].to_s.strip
@@ -283,17 +284,17 @@ module I18n::Translate
         }
 
         if flag == "ok"
-          trg["t"] = new_t.empty? ? old_t : new_t
+          trg["translation"] = new_t.empty? ? old_t : new_t
           trg["default"] = default
-          trg["old"] = "" 
+          trg["old_default"] = "" 
         else
-          trg["t"] = new_t.empty? ? old_t : new_t
+          trg["translation"] = new_t.empty? ? old_t : new_t
           trg["default"] = default
-          trg["old"] = old_default
+          trg["old_default"] = old_default
         end
 
         # make fallback work
-        trg["t"] = nil if trg["t"].empty?
+        trg["translation"] = nil if trg["translation"].empty?
 
         # say that this entry is not completed yet
         # useful if you edit files in text editor and serching for next one
@@ -327,7 +328,7 @@ module I18n::Translate
         entry = I18n::Translate.find(key, @target, @options[:separator])
         raise "Translate#[key]: wrong key '#{key}'" unless entry
         next unless entry.kind_of?(Hash)
-        self[key] = entry["t"]
+        self[key] = entry["translation"]
       end
   
       self
