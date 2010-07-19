@@ -63,7 +63,7 @@ WARNING
   If you are converting from po origin files then you can lose header of the
   file, pluralization, some flags (fuzzy will stay) and previous-context.
   Strings over multiple lines are supported, however.
-* **po files are not compatible with I18n::Backedn::Gettext.** The main purpose
+* **po files are not compatible with I18n::Backend::Gettext.** The main purpose
   of enabling conversions to po files is effort to allow usage of many po
   editors for ruby projects. You can either keep all your files in yml and
   convert them only for translators and then back or you can have default in
