@@ -110,8 +110,8 @@ module I18n::Translate::Processor
           entry << %~msgid #{@translate.find(key, @translate.default).to_s.inspect}~
           entry << %~msgstr #{value.to_s.inspect}~
         else
-          entry << %~#  #{value["comment"]}~ unless value["comment"].to_s.empty?
-          entry << %~#. #{value["extracted_comment"]}~ unless value["extracted_comment"].to_s.empty?
+          entry << %~#  #{value["comment"].to_s.strip}~ unless value["comment"].to_s.strip.empty?
+          entry << %~#. #{value["extracted_comment"].to_s.strip}~ unless value["extracted_comment"].to_s.strip.empty?
           if not value["reference"].to_s.strip.empty?
             entry << %~#: #{value["reference"].to_s.strip}~
           elsif value["file"] or value["line"]

@@ -30,21 +30,23 @@ module I18n::Translate::Processor
       lang = @translate.lang
       lang = get(xml, "TS", "language").to_s.strip if lang.empty?
       xml.elements.each("//TS/context") do |context|
-        entry = {}
         key = get(context, "name")
         context.elements.each("message") do |message|
+          entry = {}
           entry["file"] = get(message, "location", "filename").to_s.strip
           entry["line"] = get(message, "location", "line").to_s.strip
           if key.to_s.strip.empty?
+            # this happen if you use linguist on converting po to ts
+            # context is saved as a comment
             key = get(message, "comment").to_s.strip
             raise "No key for message: #{message.to_s}" if key.empty?
           end
           entry["default"] = get(message, "source")
           entry["old_default"] = get(message, "oldsource")
-          entry["extracted_comment"] = get(message, "extracomment")
-          entry["comment"] = get(message, "translatorcomment")
+          entry["extracted_comment"] = get(message, "extracomment").to_s.strip
+          entry["comment"] = get(message, "translatorcomment").to_s.strip
           entry["translation"] = get(message, "translation")
-          fuzzy = get(message, "translation", "type")
+          fuzzy = get(message, "translation", "type").to_s.strip
           entry["fuzzy"] = true unless fuzzy.empty?
           flag = get(message, "extra-po-flags").to_s.strip
           entry["flag"] = flag unless flag.empty?
