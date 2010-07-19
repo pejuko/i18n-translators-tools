@@ -235,7 +235,7 @@ module I18n::Translate
     end
 
     # wrapper for I18n::Translate.find with presets options
-    def find(key, hash=@translate, separator=@options[:separator])
+    def find(key, hash=@target, separator=@options[:separator])
       I18n::Translate.find(key, hash, separator)
     end
 
@@ -278,10 +278,11 @@ module I18n::Translate
           comment.force_encoding(enc)
         end
 
-        trg = {
-          "comment" => comment,
-          "flag" => flag
-        }
+        # merging with unknown fields
+        trg = find(key)
+        trg = {} if trg.nil? or not trg.kind_of?(Hash)
+        trg["comment"] = comment
+        trg["flag"] = flag
 
         if flag == "ok"
           trg["translation"] = new_t.empty? ? old_t : new_t

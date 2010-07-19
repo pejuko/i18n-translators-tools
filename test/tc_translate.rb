@@ -84,7 +84,29 @@ class TestTranslate < Test::Unit::TestCase
     tpo = I18n::Translate::Translate.new('cze', @opts.merge({:format => 'po'}))
     assert(tpo.kind_of?(I18n::Translate::Translate))
     assert_equal(File.join(File.expand_path($src_dir), 'cze.po'), tpo.lang_file)
-    assert_equal(["changed.interpolation.default", "changed.interpolation.translation", "changed.plural.one.default", "changed.plural.one.translation", "changed.plural.other.default", "changed.plural.other.translation", "changed.simple.default", "changed.simple.translation", "simple.interpolation.default", "simple.interpolation.translation", "simple.plural.one.default", "simple.plural.one.translation", "simple.plural.other.default", "simple.plural.other.translation", "simple.text.default", "simple.text.translation"], I18n::Translate.hash_to_keys(tpo.target, ".").sort)
+    assert_equal(["changed.interpolation.default",
+                  "changed.interpolation.translation",
+                  "changed.plural.one.default",
+                  "changed.plural.one.translation",
+                  "changed.plural.other.default",
+                  "changed.plural.other.translation",
+                  "changed.simple.default",
+                  "changed.simple.translation",
+                  "simple.interpolation.comment",
+                  "simple.interpolation.default",
+                  "simple.interpolation.extracted_comment",
+                  "simple.interpolation.file",
+                  "simple.interpolation.flag",
+                  "simple.interpolation.line",
+                  "simple.interpolation.old_default",
+                  "simple.interpolation.reference",
+                  "simple.interpolation.translation",
+                  "simple.plural.one.default",
+                  "simple.plural.one.translation",
+                  "simple.plural.other.default",
+                  "simple.plural.other.translation",
+                  "simple.text.default",
+                  "simple.text.translation"], I18n::Translate.hash_to_keys(tpo.target, ".").sort)
   end
 
 end

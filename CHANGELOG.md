@@ -1,4 +1,4 @@
-v0.1.1
+v0.2.0
 ======
 
 * **format change** Instead of "t" use "translation" and instead of
@@ -9,5 +9,7 @@ v0.1.1
   for translations. Convert to this format.
 
 * **backend PO** Use this backend if you want use po files managed with
-  i18n-translate utility.
+  i18n-translate utility with I18n.t
 
+* **PO attributes** Now are supported (understand remain untouched) extra
+  attributes like #. (extracted comment) and #: (reference)

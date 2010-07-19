@@ -6,7 +6,7 @@
 module I18n::Translate::Processor
 
   class Gettext < Template
-    FORMAT = ['po']
+    FORMAT = ['po', 'gettext']
 
   protected
 
@@ -34,9 +34,17 @@ module I18n::Translate::Processor
         when %r{^# (.*)$}
           entry["comment"] = $1.to_s.strip
 
+        # extracted comment
+        when %r{^#\. (.*)$}
+          entry["extracted_comment"] = $1.to_s.strip
+
         # reference
         when %r{^#: (.*)$}
-          entry["line"] = $1.to_s.strip
+          entry["reference"] = $1.to_s.strip
+          if entry["reference"] =~ %r{^(.*):(\d+)$}
+            entry["file"] = $1.to_s.strip
+            entry["line"] = $2.to_s.strip
+          end
 
         # flag
         when %r{^#, (.*)$}
@@ -103,9 +111,14 @@ module I18n::Translate::Processor
           entry << %~msgstr #{value.to_s.inspect}~
         else
           entry << %~#  #{value["comment"]}~ unless value["comment"].to_s.empty?
-          entry << %~#: #{value["line"]}~ unless value["line"].to_s.empty?
+          entry << %~#. #{value["extracted_comment"]}~ unless value["extracted_comment"].to_s.empty?
+          if not value["reference"].to_s.strip.empty?
+            entry << %~#: #{value["reference"].to_s.strip}~
+          elsif value["file"] or value["line"]
+            entry << %~#: #{value["file"].to_s.strip}:#{value["line"].to_s.strip}~
+          end
           flags = []
-          flags << "fuzzy" if value["fuzzy"]
+          flags << "fuzzy" if (not value["flag"].nil?) and (value["flag"] != "ok")
           flags << value["flag"] unless value["flag"].to_s.strip.empty?
           entry << %~#, #{flags.join(", ")}~ unless flags.empty?
           entry << %~#| msgid #{value["old_default"].to_s.inspect}~ unless value["old_default"].to_s.empty?

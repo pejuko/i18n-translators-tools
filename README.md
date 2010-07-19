@@ -61,8 +61,8 @@ WARNING
 * **po files are supported only partialy.** If you convert from yaml or ruby to
   po and back you don't have to care even if you are using pluralization.
   If you are converting from po origin files then you can lose header of the
-  file, pluralization, extracted comments, some flags (fuzzy will stay) and
-  previous-context. Strings over multiple lines are supported, however.
+  file, pluralization, some flags (fuzzy will stay) and previous-context.
+  Strings over multiple lines are supported, however.
 * **po files are not compatible with I18n::Backedn::Gettext.** The main purpose
   of enabling conversions to po files is effort to allow usage of many po
   editors for ruby projects. You can either keep all your files in yml and
@@ -174,6 +174,8 @@ Supported formats
 * **po**; supported format looks like
 
 		#  there is some comment
+                #. extracted-comment
+                #: reference
 		#, fuzzy, changed
 		#| msgid Old default
 		msgctxt "there.is.some.key"

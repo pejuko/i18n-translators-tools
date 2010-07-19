@@ -15,6 +15,11 @@ msgctxt "changed.simple"
 msgid "Changed simple text"
 msgstr "Změněný jednoduchý text"
 
+# Comment
+#. Extracted Comment
+#: src/test.rb:31
+#, fuzzy, incomplete
+#| msgid "Previous untranslated"
 msgctxt "simple.interpolation"
 msgid "Interpolated text '%{var}'"
 msgstr "Interpolovaný text '%{var}'"
