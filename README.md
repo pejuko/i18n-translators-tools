@@ -192,7 +192,10 @@ Supported formats
 * **yml**; standard yaml files in I18n simple format
 * **rb**; typical ruby files in I18n simple format
 * **ts**; QT Linguist TS format. If you are planing to do translation in
-  qt linguist, convert to this format rather then to po.
+  qt linguist, convert to this format rather then to po. Include TS backend
+  if you want use this foramat for locales.
+
+      I18n::Backend::Simple.send(:include, I18n::Backend::TS)
 
 
 New locale files format
