@@ -13,7 +13,47 @@ module I18n::Translate::Processor
 
   protected
 
+    def get(xml, path, key=nil)
+      elements = []
+      xml.elements.each(path) {|e| elements << e}
+      element = elements.first
+      ret = ""
+      ret = ::CGI::unescapeHTML(element.get_text.to_s) if element and not key
+      ret = ::CGI::unescapeHTML(element.attributes[key].to_s.strip) if element and key
+      ret.gsub!("&apos;", "'")
+      ret
+    end
+
     def import(data)
+      hash = {}
+      xml = ::REXML::Document.new(data)
+      lang = @translate.lang
+      lang = get(xml, "TS", "language").to_s.strip if lang.empty?
+      xml.elements.each("//TS/context") do |context|
+        entry = {}
+        key = get(context, "name")
+        context.elements.each("message") do |message|
+          entry["file"] = get(message, "location", "filename").to_s.strip
+          entry["line"] = get(message, "location", "line").to_s.strip
+          if key.to_s.strip.empty?
+            key = get(message, "comment").to_s.strip
+            raise "No key for message: #{message.to_s}" if key.empty?
+          end
+          entry["default"] = get(message, "source")
+          entry["old_default"] = get(message, "oldsource")
+          entry["extracted_comment"] = get(message, "extracomment")
+          entry["comment"] = get(message, "translatorcomment")
+          entry["translation"] = get(message, "translation")
+          fuzzy = get(message, "translation", "type")
+          entry["fuzzy"] = true unless fuzzy.empty?
+          flag = get(message, "extra-po-flags").to_s.strip
+          entry["flag"] = flag unless flag.empty?
+          entry.delete_if {|k,v| v.to_s.empty?}
+          I18n::Translate.set(key, entry, hash, @translate.options[:separator])
+          key = nil
+        end
+      end
+      {lang => hash}
     end
 
 
@@ -35,33 +75,51 @@ EOF
     <context>
         <name>#{::CGI.escapeHTML(key)}</name>
         <message>
-          <source>#{::CGI.escapeHTML(@translate.find(key, @translate.default).to_s)}</source>
-          <translation#{fuzzy}>#{::CGI.escapeHTML(value.to_s)}</translation>
+            <source>#{::CGI.escapeHTML(@translate.find(key, @translate.default).to_s)}</source>
+            <translation#{fuzzy}>#{::CGI.escapeHTML(value.to_s)}</translation>
         </message>
     </context>
 EOF
         else
-          fuzzy = (value["flag"] == "ok") ? "" : %~ type="unfinished"~
+          fuzzy = ((value["flag"] == "ok") or value["flag"].to_s.strip.empty?) ? "" : %~ type="unfinished"~
           xml += <<EOF
     <context>
-      <name>#{::CGI.escapeHTML(key)}</name>
-      <message>
-          <source>#{::CGI.escapeHTML(value["default"].to_s)}</source>
+        <name>#{::CGI.escapeHTML(key)}</name>
+        <message>
+EOF
+          if value["file"] or value["line"]
+            xml += <<EOF
+            <location filename="#{::CGI.escapeHTML(value["file"].to_s)}" line="#{::CGI.escapeHTML(value["line"].to_s)}" />
+EOF
+          end
+          xml += <<EOF
+            <source>#{::CGI.escapeHTML(value["default"].to_s)}</source>
 EOF
           unless value["old_default"].to_s.empty?
             xml += <<EOF
-          <oldsource>#{::CGI.escapeHTML(value["old_default"].to_s)}</oldsource>
+            <oldsource>#{::CGI.escapeHTML(value["old_default"].to_s)}</oldsource>
+EOF
+          end
+          unless value["extracted_comment"].to_s.empty?
+            xml += <<EOF
+            <extracomment>#{::CGI.escapeHTML(value["extracted_comment"].to_s)}</extracomment>
 EOF
           end
           unless value["comment"].to_s.empty?
             xml += <<EOF
-          <translatorcomment>#{::CGI.escapeHTML(value["comment"].to_s)}</translatorcomment>
+            <translatorcomment>#{::CGI.escapeHTML(value["comment"].to_s)}</translatorcomment>
 EOF
           end
           xml += <<EOF
-          <translation#{fuzzy}>#{::CGI.escapeHTML(value["t"].to_s)}</translation>
-          <extra-po-flags>#{::CGI.escapeHTML(value["flag"].to_s)}</extra-po-flags>
-      </message>
+            <translation#{fuzzy}>#{::CGI.escapeHTML(value["translation"].to_s)}</translation>
+EOF
+          unless value["flag"].to_s.strip.empty?
+            xml += <<EOF
+            <extra-po-flags>#{::CGI.escapeHTML(value["flag"].to_s.strip)}</extra-po-flags>
+EOF
+          end
+          xml += <<EOF
+        </message>
     </context>
 EOF
         end

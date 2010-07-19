@@ -15,7 +15,7 @@ msgctxt "changed.simple"
 msgid "Changed simple text"
 msgstr "Změněný jednoduchý text"
 
-# Comment
+#  Comment
 #. Extracted Comment
 #: src/test.rb:31
 #, fuzzy, incomplete

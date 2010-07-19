@@ -379,7 +379,8 @@ module I18n::Translate
       fname = file_name(lang, type)
 
       if File.exists?(fname)
-        return [Processor.read(fname, self)[lang], fname]
+        data = Processor.read(fname, self)
+        return [data[lang], fname]
       else
         STDERR << "Warning: I18n::Translate#load_locale: file `#{fname}' does NOT exists. Creating empty locale.\n"
       end
