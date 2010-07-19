@@ -173,14 +173,14 @@ Supported formats
 
 * **po**; supported format looks like
 
-		#  there is some comment
-                #. extracted-comment
-                #: reference
-		#, fuzzy, changed
-		#| msgid Old default
-		msgctxt "there.is.some.key"
-		msgid "Default text"
-		msgstr "Prelozeny defaultni text"
+        #  there is some comment
+        #. extracted-comment
+        #: reference
+        #, fuzzy, changed
+        #| msgid Old default
+        msgctxt "there.is.some.key"
+        msgid "Default text"
+        msgstr "Prelozeny defaultni text"
 
   Such po file is pretty usable with po editors.
 
