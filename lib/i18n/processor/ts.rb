@@ -61,6 +61,7 @@ module I18n::Translate::Processor
 
     # serialize hash to XML
     def export(data, indent=0)
+      target = data[@translate.lang]
       xml = <<EOF
 <?xml version="1.0" encoding="#{@translate.options[:encoding]}"?>
 <!DOCTYPE TS>
@@ -69,7 +70,7 @@ EOF
 
       keys = I18n::Translate.hash_to_keys(@translate.default).sort
       keys.each do |key|
-        value = @translate.find(key, @translate.target)
+        value = @translate.find(key, target)
 
         if value.kind_of?(String)
           fuzzy = (value.to_s.empty?) ? %~ type="unfinished"~ : ""

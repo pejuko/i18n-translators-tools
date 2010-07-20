@@ -50,6 +50,8 @@ module I18n::Translate
       def initialize(fname, tr)
         @filename = fname
         @translate = tr
+        fname =~ %r{/?([^/]+)\.[^\.]+$}i
+        @lang = $1.to_s.strip
       end
 
       def read
@@ -113,4 +115,5 @@ require 'i18n/processor/yaml'
 require 'i18n/processor/ruby'
 require 'i18n/processor/gettext'
 require 'i18n/processor/ts'
+require 'i18n/processor/properties'
 

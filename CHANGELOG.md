@@ -21,6 +21,10 @@ v0.2.0
 
       I18n::Backend::Simple.send(:include, I18n::Backend::TS)
 
+* **java properties format supported**
+
+      I18n::Backend::Simple.send(:include, I18n::Backend::Properties)
+
 
 v0.1.1
 ======

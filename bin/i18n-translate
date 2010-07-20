@@ -296,9 +296,6 @@ when 'translate'
 else
 
   I18n::Translate.scan(options) do |tr|
-    # skip if not desired locale
-    next if options[:locale] and (options[:locale] != tr.lang)
-
     process_locale(tr, command, options)
   end
 

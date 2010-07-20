@@ -49,7 +49,7 @@ require 'find'
 module I18n::Translate
 
   FLAGS = %w(ok incomplete changed untranslated)
-  FORMATS = %w(yml rb po ts)       # the first one is preferred if :format => auto
+  FORMATS = %w(yml rb po ts properties)       # the first one is preferred if :format => auto
 
   # returns flat array of all keys e.g. ["system.message.ok", "system.message.error", ...]
   def self.hash_to_keys(hash, separator=".", prefix="")
@@ -108,8 +108,13 @@ module I18n::Translate
       locale, format = Translate.valid_file?(entry, o[:format])
       if (not format) or (locale == o[:default])
         puts "#{entry}...skipping" if o[:verbose]
-        next unless format
-        next if locale == o[:default]
+        next
+      end
+
+      # skip if not desired locale
+      if o[:locale] and (o[:locale] != "auto") and (o[:locale] != locale)
+        puts "#{entry}...skipping" if o[:verbose]
+        next 
       end
 
       exclude = false

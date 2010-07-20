@@ -41,6 +41,7 @@ I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
 I18n::Backend::Simple.send(:include, I18n::Backend::Translate)
 I18n::Backend::Simple.send(:include, I18n::Backend::PO)
 I18n::Backend::Simple.send(:include, I18n::Backend::TS)
+I18n::Backend::Simple.send(:include, I18n::Backend::Properties)
 I18n.default_locale = 'default'
 I18n.locale = 'cze'
 
