@@ -9,6 +9,7 @@ require 'yaml'
 
 $:.unshift File.expand_path(File.join(File.dirname(__FILE__), ".."))
 require 'lib/i18n-translate'
+require 'test/backend'
 
 $current_dir = File.expand_path(File.dirname(__FILE__))
 $src_dir = File.join($current_dir, 'locale/src')
