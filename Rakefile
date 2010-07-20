@@ -7,12 +7,39 @@ require 'rake/testtask'
 require 'rake/gempackagetask'
 require 'rake/clean'
 
-CLEAN << "coverage" << "pkg"
+CLEAN << "coverage" << "pkg" << "README.html" << "CHANGELOG.html"
 
-task :default => [:test, :gem]
+task :default => [:test, :doc, :gem]
 Rake::TestTask.new(:test) do |t|
   t.pattern = File.join(File.dirname(__FILE__), 'test/all.rb')
   t.verbose = true
 end
 
 Rake::GemPackageTask.new(eval(File.read("i18n-translators-tools.gemspec"))) {|pkg|}
+
+begin
+  require 'bluecloth'
+
+  def build_document(mdfile)
+    fname = $1 if mdfile =~ /(.*)\.md$/
+    raise "Unknown file type" unless fname
+
+    data = File.read(mdfile)
+    md = Markdown.new(data)
+    htmlfile = "#{fname}.html"
+
+    File.open(htmlfile, "w") { |f| f << md.to_html }
+  end
+
+  task :doc => [:readme, :changelog]
+
+  task :readme do |t|
+    build_document("README.md")
+  end
+
+  task :changelog do |t|
+    build_document("CHANGELOG.md")
+  end
+
+rescue
+end
