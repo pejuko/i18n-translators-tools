@@ -6,7 +6,7 @@
 module I18n::Translate::Processor
 
   class Gettext < Template
-    FORMAT = ['po', 'gettext']
+    FORMAT = ['po', 'pot', 'gettext']
 
   protected
 
