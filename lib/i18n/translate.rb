@@ -165,7 +165,7 @@ module I18n::Translate
 
     # check if the file has supported format
     def self.valid_file?(fname, format=Translate::DEFAULT_OPTIONS[:format])
-      pattern = ".*?"
+      pattern = "[^\.]+"
       pattern = format if format != "auto"
       fname =~ /\/?([^\/]*?)\.(#{pattern})$/
       locale, format = $1, $2
