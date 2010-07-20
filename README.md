@@ -12,7 +12,7 @@ Interesting features
 * merging and changes propagation (adding, removing and changed default text)
   keeping default file untouched
 * creating new locale file based on another (usually default) file
-* converting from one format to another (yml <=> rb <=> po)
+* converting from one format to another (yml <=> rb <=> po <=> ts <=> properties)
 * statistics
 * built-in simple console translator
 * support for locales split into sub-directories like:
