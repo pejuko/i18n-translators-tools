@@ -68,6 +68,11 @@ WARNING
   editors for ruby projects. You can either keep all your files in yml and
   convert them only for translators and then back or you can have default in
   yml and other locales in po files. i18-translate tool will take care of it.
+* **QT TS format is not fully supported.** TS format is changing with almost
+  every qt release so i18n-translate don't support:
+  * extra-po-msgid_plural, extra-po-old_msgid_plural
+  * extra-loc-*
+  * nested context
 
 Installation
 ------------
