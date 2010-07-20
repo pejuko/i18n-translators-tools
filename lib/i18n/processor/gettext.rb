@@ -68,8 +68,12 @@ module I18n::Translate::Processor
 
         # default
         when %r{^msgid "(.*)"$}
-          last = "default"
-          entry[last] = $1.to_s
+          if $1.to_s.strip.empty?
+            last = "po-header"
+          else
+            last = "default"
+            entry[last] = $1.to_s
+          end
 
         # translation
         when %r{^msgstr "(.*)"$}
@@ -80,9 +84,18 @@ module I18n::Translate::Processor
         when %r{^"(.*)"$}
           if last == "key"
             key = "#{key}#{$1}"
+          elsif last == "po-header"
+            case $1
+            when %r{^Content-Type: text/plain; charset=(.*)$}
+              enc = $1.to_s.strip
+              @translate[:encoding] = enc unless enc.empty?
+            when %r{^X-Language: (.*)$}
+              # skip language is set from filename
+            end
           elsif last
             entry[last] = "#{entry[last]}#{$1}"
           end
+
         end
       end
 
@@ -100,6 +113,10 @@ module I18n::Translate::Processor
       str = ""
       keys = I18n::Translate.hash_to_keys(@translate.default).sort
 
+      str << %~msgid ""\n~
+      str << %~msgstr ""\n~
+      str << %~"Content-Type: text/plain; charset=#{@translate.options[:encoding]}\\n"\n~
+      str << %~"X-Language: #{@translate.lang}\\n"\n~
       keys.each do |key|
         entry = [""]
         value = @translate.find(key, @translate.target)
