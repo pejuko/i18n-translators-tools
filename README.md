@@ -202,6 +202,10 @@ Supported formats
 
       I18n::Backend::Simple.send(:include, I18n::Backend::TS)
 
+* **properties**; support for java properties locales
+
+      I18n::Backend::Simple.send(:include, I18n::Backend::Properties)
+
 
 New locale files format
 ------------------------
