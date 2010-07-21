@@ -277,5 +277,7 @@ It is not necessary to use all switches.
 [1]: http://github.com/pejuko/i18n-web-translator
 
 
-------------------------------------------------------------------------------
+<!--
 vi: filetype=mkd
+-->
+
