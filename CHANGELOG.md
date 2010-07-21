@@ -31,3 +31,7 @@ v0.1.1
 
 * fix: gem dependencies
 * file locking: should be thread safe
+
+
+------------------------------------------------------------------------------
+vi: filetype=mkd
