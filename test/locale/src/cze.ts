@@ -69,4 +69,11 @@
         <translation>V tomto textu\nje nový řádek.</translation>
     </message>
 </context>
+<context>
+    <name>test.quote</name>
+    <message>
+        <source>This text contains \" -- one single quote.</source>
+        <translation>Tento text obsahuje \" -- jednu uvozovku.</translation>
+    </message>
+</context>
 </TS>

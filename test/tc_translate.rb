@@ -108,7 +108,10 @@ class TestTranslate < Test::Unit::TestCase
                   "simple.text.default",
                   "simple.text.translation",
                   "test.new_line.default",
-                  "test.new_line.translation"], I18n::Translate.hash_to_keys(tpo.target, ".").sort)
+                  "test.new_line.translation",
+                  "test.quote.default",
+                  "test.quote.translation"
+    ], I18n::Translate.hash_to_keys(tpo.target, ".").sort)
   end
 
 end

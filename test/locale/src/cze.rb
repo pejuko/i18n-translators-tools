@@ -32,7 +32,8 @@
       "new_line" => {
         "default" => "In this text\nis a new line.",
         "translation" => "V tomto textu\nje nový řádek."
-      }
+      },
+      "quote" => "Tento text obsahuje \" -- jednu uvozovku."
     }
   }
 }

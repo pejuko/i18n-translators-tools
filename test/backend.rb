@@ -34,5 +34,10 @@ module I18n::Test
     def test_0080_new_line
       assert_equal( "V tomto textu\nje nový řádek.", I18n.t("test.new_line") )
     end
+
+    def test_0080_quote
+      assert_equal( "Tento text obsahuje \" -- jednu uvozovku.", I18n.t("test.quote") )
+    end
+
   end
 end

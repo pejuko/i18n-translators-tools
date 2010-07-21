@@ -16,3 +16,4 @@ default:
       other: Many items
   test:
     new_line: "In this text\nis a new line."
+    quote: "This text contains \" -- one quote."
