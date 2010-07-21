@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+# vi: fenc=utf-8:expandtab:ts=2:sw=2:sts=2
+# 
+# @author: Petr Kovar <pejuko@gmail.com>
 
 module I18n::Test
   module Backend

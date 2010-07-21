@@ -48,9 +48,7 @@ class TestTranslate < Test::Unit::TestCase
 
     assert( entry.kind_of?(Hash) )
     assert_equal( { "translation" => "Text k přeložení",
-                    "old_default" => "",
                     "default" => "Text to translate",
-                    "comment" => "",
                     "flag" => "ok"
                   }, entry )
 
@@ -58,7 +56,6 @@ class TestTranslate < Test::Unit::TestCase
     assert_equal( { "translation" => "Změněný jednoduchý text",
                     "old_default" => "Changed simple text",
                     "default" => "This text is newer and changed",
-                    "comment" => "",
                     "flag" => "changed",
                     "fuzzy" => true
                   }, entry )
@@ -84,7 +81,7 @@ class TestTranslate < Test::Unit::TestCase
     tpo = I18n::Translate::Translate.new('cze', @opts.merge({:format => 'po'}))
     assert(tpo.kind_of?(I18n::Translate::Translate))
     assert_equal(File.join(File.expand_path($src_dir), 'cze.po'), tpo.lang_file)
-    assert_equal(["changed.interpolation.default",
+    x = ["changed.interpolation.default",
                   "changed.interpolation.translation",
                   "changed.plural.one.default",
                   "changed.plural.one.translation",
@@ -97,6 +94,7 @@ class TestTranslate < Test::Unit::TestCase
                   "simple.interpolation.extracted_comment",
                   "simple.interpolation.file",
                   "simple.interpolation.flag",
+                  "simple.interpolation.fuzzy",
                   "simple.interpolation.line",
                   "simple.interpolation.old_default",
                   "simple.interpolation.reference",
@@ -111,7 +109,10 @@ class TestTranslate < Test::Unit::TestCase
                   "test.new_line.translation",
                   "test.quote.default",
                   "test.quote.translation"
-    ], I18n::Translate.hash_to_keys(tpo.target, ".").sort)
+    ]
+    target_keys = I18n::Translate.hash_to_keys(tpo.target, ".").sort
+    #diff(x, target_keys)
+    assert_equal(x, target_keys)
   end
 
 end

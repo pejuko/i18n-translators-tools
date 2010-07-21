@@ -306,6 +306,9 @@ module I18n::Translate
         # useful if you edit files in text editor and serching for next one
         trg["fuzzy"] = true if flag != "ok"
 
+        # clean empty values
+        trg.delete_if{ |k,v| v.to_s.empty? }
+
         self[key] = trg
       end
     end

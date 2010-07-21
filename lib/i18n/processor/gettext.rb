@@ -55,6 +55,7 @@ module I18n::Translate::Processor
           else
             flags.delete_if{|x| not I18n::Translate::FLAGS.include?(x)}
             entry["flag"] = flags.first unless flags.empty?
+            entry["fuzzy"] = true
           end
 
         # old default
@@ -108,8 +109,8 @@ module I18n::Translate::Processor
     end
 
 
-    # this export ignores data
     def export(data)
+      target = data[@translate.lang]
       str = ""
       keys = I18n::Translate.hash_to_keys(@translate.default).sort
 
@@ -119,7 +120,7 @@ module I18n::Translate::Processor
       str << %~"X-Language: #{@translate.lang}\\n"\n~
       keys.each do |key|
         entry = [""]
-        value = @translate.find(key, @translate.target)
+        value = @translate.find(key, target)
         next unless value
 
         if value.kind_of?(String)

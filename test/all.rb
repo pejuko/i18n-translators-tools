@@ -3,6 +3,8 @@
 # 
 # @author: Petr Kovar <pejuko@gmail.com>
 #
+$KCODE='UTF8'
+
 require 'test/unit'
 require 'rubygems'
 require 'yaml'
@@ -34,6 +36,25 @@ def load_src_trg
   res[:src] = load_src
   res[:trg] = load_trg
   res
+end
+
+
+# helper for comparing Hasheds and Arrays
+# prints out differences
+def diff(src, trg)
+  return if src == trg
+  if src.kind_of?(Hash) and trg.kind_of?(Hash)
+    src.keys.each { |key| puts "src key: #{key}" unless trg.keys.include?(key) }
+    trg.keys.each { |key| puts "trg key: #{key}" unless src.keys.include?(key) }
+    src.keys.each do |key, value|
+      puts "#{key} #{src[key].inspect} != #{trg[key].inspect}" if src[key] != trg[key]
+    end
+  elsif src.kind_of?(Array) and trg.kind_of?(Array)
+    src.each {|k| puts "not in trg '#{k}'" unless trg.include?(k)}
+    trg.each {|k| puts "not in src '#{k}'" unless src.include?(k)}
+  else
+    puts "not equal types"
+  end
 end
 
 
