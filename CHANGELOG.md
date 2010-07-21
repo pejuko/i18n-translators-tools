@@ -5,6 +5,8 @@ v0.2.0
   "old" use "old_default". Old format will be, however, supported as a
   shorthand. The i18n-translate tool will always save files in new format.
 
+* **merge leave out empty fields**
+
 * **backend PO** Use this backend if you want use po files managed with
   i18n-translate utility with I18n.t
 
