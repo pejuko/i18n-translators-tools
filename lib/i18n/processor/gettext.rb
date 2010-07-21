@@ -72,13 +72,13 @@ module I18n::Translate::Processor
             last = "po-header"
           else
             last = "default"
-            entry[last] = $1.to_s
+            entry[last] = uninspect($1.to_s)
           end
 
         # translation
         when %r{^msgstr "(.*)"$}
           last = "translation"
-          entry[last] = $1.to_s
+          entry[last] = uninspect($1.to_s)
 
         # string continuation
         when %r{^"(.*)"$}
@@ -93,7 +93,7 @@ module I18n::Translate::Processor
               # skip language is set from filename
             end
           elsif last
-            entry[last] = "#{entry[last]}#{$1}"
+            entry[last] = "#{entry[last]}#{uninspect($1)}"
           end
 
         end

@@ -18,9 +18,10 @@ module I18n::Translate::Processor
       xml.elements.each(path) {|e| elements << e}
       element = elements.first
       ret = ""
-      ret = ::CGI::unescapeHTML(element.get_text.to_s) if element and not key
-      ret = ::CGI::unescapeHTML(element.attributes[key].to_s.strip) if element and key
+      ret = element.get_text.to_s if element and not key
+      ret = element.attributes[key].to_s.strip if element and key
       ret.gsub!("&apos;", "'")
+      ret = uninspect(::CGI::unescapeHTML(ret))
       ret
     end
 

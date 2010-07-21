@@ -4,7 +4,7 @@
 # @author: Petr Kovar <pejuko@gmail.com>
 #
 
-class TestBackendPO < Test::Unit::TestCase
+class TestBackendTS < Test::Unit::TestCase
 
   def setup
     I18n.load_path = Dir[ "#{$src_dir}/default.yml", "#{$src_dir}/*.ts" ]

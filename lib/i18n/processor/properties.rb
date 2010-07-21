@@ -34,13 +34,13 @@ module I18n::Translate::Processor
         # end of continuous string
         when %r{^\s*([^=]+)$}
           value << $1.to_s.strip
-          I18n::Translate.set(key, value, hash, @translate.options[:separator])
+          I18n::Translate.set(key, uninspect(value), hash, @translate.options[:separator])
           value = nil
 
         # simple key = value
         when %r{^([^=]+)\s*=\s*(.*)$}
           key, value = $1.to_s.strip, $2.to_s.strip
-          I18n::Translate.set(key, value, hash, @translate.options[:separator])
+          I18n::Translate.set(key, uninspect(value), hash, @translate.options[:separator])
         end
       end
 
