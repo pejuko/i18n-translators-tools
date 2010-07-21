@@ -18,6 +18,11 @@ end
 
 Rake::GemPackageTask.new(eval(File.read("i18n-translators-tools.gemspec"))) {|pkg|}
 
+desc "Test with rcov"
+task :rcov do |t| 
+  system "rcov  --exclude .rvm --sort coverage --text-summary -o coverage  test/all.rb"
+end
+
 begin
   require 'bluecloth'
 
