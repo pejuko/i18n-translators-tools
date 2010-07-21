@@ -332,7 +332,8 @@ module I18n::Translate
       keys = I18n::Translate.hash_to_keys(@default, @options[:separator])
       keys.each do |key|
         entry = I18n::Translate.find(key, @target, @options[:separator])
-        raise "Translate#[key]: wrong key '#{key}'" unless entry
+        next unless entry # skip entries that are not merged in target yet
+        #raise "Translate#[key]: wrong key '#{key}'" unless entry
         next unless entry.kind_of?(Hash)
         self[key] = entry["translation"]
       end
