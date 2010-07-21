@@ -26,5 +26,13 @@ module I18n::Test
     def test_0060_I18n_plugin_translate_interpolation
       assert_equal( "Interpolovaný změněný text 'ahoj'", I18n.t("changed.interpolation", :var => "ahoj"))
     end
+
+    def test_0070_I18n_fallback_is_working
+      assert_equal( "This text is only in default", I18n.t("missing.fallback") )
+    end
+
+    def test_0080_new_line
+      assert_equal( "V tomto textu\nje nový řádek.", I18n.t("test.new_line") )
+    end
   end
 end

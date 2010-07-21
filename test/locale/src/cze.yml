@@ -1,11 +1,5 @@
 ---
 cze:
-  simple:
-    text: Text k přeložení
-    interpolation: "Interpolovaný text '%{var}'"
-    plural:
-      one: Jedna položka
-      other: Mnoho položek
   changed:
     simple:
       default: Changed simple text
@@ -20,3 +14,13 @@ cze:
       other:
         default: Changed plural other texts
         t: Změněný plurál textů
+  simple:
+    text: Text k přeložení
+    interpolation: "Interpolovaný text '%{var}'"
+    plural:
+      one: Jedna položka
+      other: Mnoho položek
+  test:
+    new_line:
+      default: "In this text\nis a new line."
+      translation: "V tomto textu\nje nový řádek."

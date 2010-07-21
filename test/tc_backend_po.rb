@@ -7,7 +7,7 @@
 class TestBackendPO < Test::Unit::TestCase
 
   def setup
-    I18n.load_path = Dir[ "#{$src_dir}/*.po" ]
+    I18n.load_path << Dir[ "#{$src_dir}/default.yml", "#{$src_dir}/*.po" ]
     I18n.reload!
   end
 

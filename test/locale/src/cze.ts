@@ -62,4 +62,11 @@
         <translation>Text k přeložení</translation>
     </message>
 </context>
+<context>
+    <name>test.new_line</name>
+    <message>
+        <source>In this text\nis a new line.</source>
+        <translation>V tomto textu\nje nový řádek.</translation>
+    </message>
+</context>
 </TS>

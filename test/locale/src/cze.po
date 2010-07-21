@@ -35,3 +35,7 @@ msgstr "Mnoho položek"
 msgctxt "simple.text"
 msgid "Text to translate"
 msgstr "Text k přeložení"
+
+msgctxt "test.new_line"
+msgid "In this text\nis a new line."
+msgstr "V tomto textu\nje nový řádek."

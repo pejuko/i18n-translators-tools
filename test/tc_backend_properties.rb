@@ -7,7 +7,7 @@
 class TestBackendProperties < Test::Unit::TestCase
 
   def setup
-    I18n.load_path = Dir[ "#{$src_dir}/*.properties" ]
+    I18n.load_path = Dir[ "#{$src_dir}/default.yml", "#{$src_dir}/*.properties" ]
     I18n.reload!
   end
 

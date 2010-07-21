@@ -1,14 +1,18 @@
 ---
 default:
-  simple:
-    text: Text to translate
-    interpolation: "Interpolated text '%{var}'"
-    plural:
-      one: One item
-      other: Many items
   changed:
     simple: This text is newer and changed 
     interpolation: "This interpolated text is newer '%{var}'"
     plural:
       one: This text is newer plural one text
       other: This text is newer plural other text
+  missing:
+    fallback: "This text is only in default"
+  simple:
+    text: Text to translate
+    interpolation: "Interpolated text '%{var}'"
+    plural:
+      one: One item
+      other: Many items
+  test:
+    new_line: "In this text\nis a new line."

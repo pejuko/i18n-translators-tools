@@ -27,6 +27,12 @@
         "other" => "Mnoho položek"
       },
       "text" => "Text k přeložení"
+    },
+    "test" => {
+      "new_line" => {
+        "default" => "In this text\nis a new line.",
+        "translation" => "V tomto textu\nje nový řádek."
+      }
     }
   }
 }
