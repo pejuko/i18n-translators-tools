@@ -4,10 +4,10 @@
 # @author: Petr Kovar <pejuko@gmail.com>
 #
 
-class TestProcessorGettext < Test::Unit::TestCase
+class TestProcessorRuby < Test::Unit::TestCase
 
   def setup
-    __prepare(I18n::Translate::Processor::Gettext, "cze.po")
+    __prepare(I18n::Translate::Processor::Ruby, "cze.rb")
   end
 
   include I18n::Test::Processor

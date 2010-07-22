@@ -4,10 +4,10 @@
 # @author: Petr Kovar <pejuko@gmail.com>
 #
 
-class TestProcessorGettext < Test::Unit::TestCase
+class TestProcessorYAML < Test::Unit::TestCase
 
   def setup
-    __prepare(I18n::Translate::Processor::Gettext, "cze.po")
+    __prepare(I18n::Translate::Processor::YAML, "cze.yml")
   end
 
   include I18n::Test::Processor

@@ -1,86 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="en_US">
+<TS version="2.0" language="cs">
 <context>
-    <name>changed.interpolation</name>
+    <name></name>
+    <message>
+        <source></source>
+        <translation>Content-Type: text/plain; charset=utf-8
+</translation>
+    </message>
     <message>
         <source>Interpolated changed text &apos;%{var}&apos;</source>
+        <comment>changed.interpolation</comment>
         <translation>Interpolovaný změněný text &apos;%{var}&apos;</translation>
     </message>
-</context>
-<context>
-    <name>changed.plural.one</name>
     <message>
         <source>Changed plural one text</source>
+        <comment>changed.plural.one</comment>
         <translation>Změněný plurál text</translation>
     </message>
-</context>
-<context>
-    <name>changed.plural.other</name>
     <message>
         <source>Changed plural other texts</source>
+        <comment>changed.plural.other</comment>
         <translation>Změněný plurál textů</translation>
     </message>
-</context>
-<context>
-    <name>changed.simple</name>
     <message>
         <source>Changed simple text</source>
+        <comment>changed.simple</comment>
         <translation>Změněný jednoduchý text</translation>
     </message>
-</context>
-<context>
-    <name>extended.interpolation</name>
     <message>
         <location filename="src/test.rb" line="31"/>
         <source>Interpolated text &apos;%{var}&apos;</source>
         <oldsource>Previous untranslated</oldsource>
-        <extracomment>Extracted Comment</extracomment>
-        <translatorcomment>Comment</translatorcomment>
+        <comment>extended.interpolation</comment>
+        <extracomment>Extracted Comment
+</extracomment>
+        <translatorcomment>Comment
+</translatorcomment>
         <translation type="unfinished">Interpolovaný text &apos;%{var}&apos;</translation>
         <extra-po-flags>incomplete</extra-po-flags>
     </message>
-</context>
-<context>
-    <name>simple.interpolation</name>
     <message>
         <source>Interpolated text &apos;%{var}&apos;</source>
+        <comment>simple.interpolation</comment>
         <translation>Interpolovaný text &apos;%{var}&apos;</translation>
     </message>
-</context>
-<context>
-    <name>simple.plural.one</name>
     <message>
         <source>One item</source>
+        <comment>simple.plural.one</comment>
         <translation>Jedna položka</translation>
     </message>
-</context>
-<context>
-    <name>simple.plural.other</name>
     <message>
         <source>Many items</source>
+        <comment>simple.plural.other</comment>
         <translation>Mnoho položek</translation>
     </message>
-</context>
-<context>
-    <name>simple.text</name>
     <message>
         <source>Text to translate</source>
+        <comment>simple.text</comment>
         <translation>Text k přeložení</translation>
     </message>
-</context>
-<context>
-    <name>test.new_line</name>
     <message>
-        <source>In this text\nis a new line.</source>
-        <translation>V tomto textu\nje nový řádek.</translation>
+        <source>In this text
+is a new line.</source>
+        <comment>test.new_line</comment>
+        <translation>V tomto textu
+je nový řádek.</translation>
     </message>
-</context>
-<context>
-    <name>test.quote</name>
     <message>
-        <source>This text contains \" -- one single quote.</source>
-        <translation>Tento text obsahuje \" -- jednu uvozovku.</translation>
+        <source>This text contains &quot; -- one quote.</source>
+        <comment>test.quote</comment>
+        <translation>Tento text obsahuje &quot; -- jednu uvozovku.</translation>
     </message>
 </context>
 </TS>

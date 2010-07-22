@@ -6,6 +6,8 @@ default:
     plural:
       one: This text is newer plural one text
       other: This text is newer plural other text
+  extended:
+    interpolation: "Interpolated text '%{var}'"
   missing:
     fallback: "This text is only in default"
   simple:

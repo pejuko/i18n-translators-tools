@@ -12,10 +12,27 @@ require 'yaml'
 $:.unshift File.expand_path(File.join(File.dirname(__FILE__), ".."))
 require 'lib/i18n-translate'
 require 'test/backend'
+require 'test/processor'
 
 $current_dir = File.expand_path(File.dirname(__FILE__))
 $src_dir = File.join($current_dir, 'locale/src')
 $trg_dir = File.join($current_dir, 'locale/trg')
+
+
+    # some data for comparation
+$si = {
+  "comment" => "Comment",
+  "extracted_comment" => "Extracted Comment",
+  "reference" => "src/test.rb:31",
+  "file" => "src/test.rb",
+  "line" => "31",
+  "fuzzy" => true,
+  "flag" => "incomplete",
+  "old_default" => "Previous untranslated",
+  "default" => "Interpolated text '%{var}'",
+  "translation" => "Interpolovaný text '%{var}'"
+}
+
 
 def load_yml(default, cze)
   tr = I18n::Translate::Translate.new('default', {:empty => true})

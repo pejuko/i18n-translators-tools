@@ -81,38 +81,104 @@ class TestTranslate < Test::Unit::TestCase
     tpo = I18n::Translate::Translate.new('cze', @opts.merge({:format => 'po'}))
     assert(tpo.kind_of?(I18n::Translate::Translate))
     assert_equal(File.join(File.expand_path($src_dir), 'cze.po'), tpo.lang_file)
-    x = ["changed.interpolation.default",
-                  "changed.interpolation.translation",
-                  "changed.plural.one.default",
-                  "changed.plural.one.translation",
-                  "changed.plural.other.default",
-                  "changed.plural.other.translation",
-                  "changed.simple.default",
-                  "changed.simple.translation",
-                  "simple.interpolation.comment",
-                  "simple.interpolation.default",
-                  "simple.interpolation.extracted_comment",
-                  "simple.interpolation.file",
-                  "simple.interpolation.flag",
-                  "simple.interpolation.fuzzy",
-                  "simple.interpolation.line",
-                  "simple.interpolation.old_default",
-                  "simple.interpolation.reference",
-                  "simple.interpolation.translation",
-                  "simple.plural.one.default",
-                  "simple.plural.one.translation",
-                  "simple.plural.other.default",
-                  "simple.plural.other.translation",
-                  "simple.text.default",
-                  "simple.text.translation",
-                  "test.new_line.default",
-                  "test.new_line.translation",
-                  "test.quote.default",
-                  "test.quote.translation"
-    ]
-    target_keys = I18n::Translate.hash_to_keys(tpo.target, ".").sort
-    #diff(x, target_keys)
-    assert_equal(x, target_keys)
+    assert_equal(@t.target.keys.sort, tpo.target.keys.sort)
+    assert_equal($si, tpo.target["extended"]["interpolation"])
+  end
+
+  def test_0080_convert
+    t = I18n::Translate::Translate.new('cze', @opts.merge({:format => 'yml'}))
+    t.options[:locale_dir] = $trg_dir
+    t.options[:format] = 'po'
+    t.export!
+    trg_file = File.join($trg_dir, "cze.po")
+    assert( File.exists?(trg_file) )
+    t2 = I18n::Translate::Translate.new('cze', @opts.merge({:format => 'po'}))
+    assert_equal( t.target["extended"]["interpolation"], t2.target["extended"]["interpolation"] )
+    File.unlink(trg_file)
+  end
+
+end
+
+
+
+class TestTranslateTools < Test::Unit::TestCase
+
+  def setup
+    @hash = {}
+  end
+
+  def test_0010_scan_list_files
+    locales = I18n::Translate.scan(:locale_dir => $src_dir).map{ |x| x =~ /\/([^\/]+)$/; $1 }.sort
+    assert_equal( %w(cze.po cze.properties cze.rb cze.ts cze.yml po_to_ts.ts).sort, locales )
+  end
+
+  def test_0011_scan_list_files_format
+    locales = I18n::Translate.scan(:locale_dir => $src_dir, :format => 'yml').map{ |x| x =~ /\/([^\/]+)$/; $1 }.sort
+    assert_equal( %w(cze.yml).sort, locales )
+  end
+
+  def test_0012_scan_list_files_exclude
+    locales = I18n::Translate.scan(:locale_dir => $src_dir, :exclude => 'yml').map{ |x| x =~ /\/([^\/]+)$/; $1 }.sort
+    assert_equal( %w(cze.po cze.properties cze.rb cze.ts po_to_ts.ts).sort, locales )
+  end
+
+  def test_0013_scan_list_deep
+    locales = I18n::Translate.scan(:locale_dir => $src_dir, :deep => true).map{ |x| x =~ /\/([^\/]+)$/; $1 }.sort
+    assert_equal( %w(cze.po cze.properties cze.rb cze.ts cze.yml cze.yml eng.yml po_to_ts.ts).sort, locales )
+  end
+
+  def test_0013_scan_list_deep_exclude
+    locales = I18n::Translate.scan(:locale_dir => $src_dir, :deep => true, :exclude => 'cze').map{ |x| x =~ /\/([^\/]+)$/; $1 }.sort
+    assert_equal( %w(eng.yml po_to_ts.ts).sort, locales )
+  end
+
+  def test_0020_scan_block
+    I18n::Translate.scan(:locale_dir => $src_dir, :default_format => 'yml') do |tr|
+      entry = tr.find("simple.text")
+      str = "Text k přeložení"
+      if entry.kind_of?(String)
+        assert_equal( str, entry )
+      else
+        assert_equal( str, entry["translation"] )
+      end
+    end
+  end
+
+  def test_0030_set_bad_separator
+    I18n::Translate.set("a.b.c", "Value", @hash, "|")
+    assert_equal( {"a.b.c" => "Value"}, @hash )
+  end
+
+  def test_0040_set
+    I18n::Translate.set("a.b.c", "Value", @hash)
+    assert_equal( {"a" => {"b" => {"c" => "Value"}}}, @hash )
+
+    I18n::Translate.set("a.b.d", "Value 2", @hash)
+    assert_equal( {"a" => {"b" => {"c" => "Value", "d" => "Value 2"}}}, @hash )
+  end
+
+  def test_0050_find_in_empty_hash
+    entry = I18n::Translate.find("a.b.c", @hash)
+    assert_equal( nil, entry )
+  end
+
+  def test_0050_find
+    I18n::Translate.set("a.b.c", "Value", @hash)
+    I18n::Translate.set("a.b.d", "Value 2", @hash)
+    entry = I18n::Translate.find("a.b.c", @hash)
+    assert_equal( "Value" , entry )
+  end
+
+  def test_0060_hash_to_keys_empty_hash
+    keys = I18n::Translate.hash_to_keys(@hash)
+    assert_equal( [], keys )
+  end
+
+  def test_0060_hash_to_keys_empty_hash
+    I18n::Translate.set("a.b.c", "Value", @hash)
+    I18n::Translate.set("a.b.d", "Value 2", @hash)
+    keys = I18n::Translate.hash_to_keys(@hash)
+    assert_equal( %w(a.b.c a.b.d), keys )
   end
 
 end

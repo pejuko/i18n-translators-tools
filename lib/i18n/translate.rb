@@ -365,17 +365,6 @@ module I18n::Translate
       stat
     end
 
-    def to_yaml
-      trg = {@lang => @target}
-      #YAML.dump(trg)
-      trg.ya2yaml
-    end
-
-    def to_rb
-      trg = {@lang => @target}
-      trg.to_rb
-    end
-
   protected
 
     # returns first file for @lang.type

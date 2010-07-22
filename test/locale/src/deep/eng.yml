@@ -1,0 +1,4 @@
+---
+eng:
+  test:
+    deep: "Text in nested directory"

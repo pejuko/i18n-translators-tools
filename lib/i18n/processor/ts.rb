@@ -36,11 +36,16 @@ module I18n::Translate::Processor
           entry = {}
           entry["file"] = get(message, "location", "filename").to_s.strip
           entry["line"] = get(message, "location", "line").to_s.strip
+          unless entry["file"].empty? or entry["line"].empty?
+            entry["reference"] = "#{entry['file']}:#{entry['line']}"
+          end
           if key.to_s.strip.empty?
             # this happen if you use linguist on converting po to ts
             # context is saved as a comment
             key = get(message, "comment").to_s.strip
-            raise "No key for message: #{message.to_s}" if key.empty?
+            # if converted from po using linguist, there is one message
+            # without key
+            #raise "No key for message: #{message.to_s}" if key.empty?
           end
           entry["default"] = get(message, "source")
           entry["old_default"] = get(message, "oldsource")
@@ -52,7 +57,10 @@ module I18n::Translate::Processor
           flag = get(message, "extra-po-flags").to_s.strip
           entry["flag"] = flag unless flag.empty?
           entry.delete_if {|k,v| v.to_s.empty?}
-          I18n::Translate.set(key, entry, hash, @translate.options[:separator])
+          if key
+            # not key means it can be header of po file converted to ts
+            I18n::Translate.set(key, entry, hash, @translate.options[:separator])
+          end
           key = nil
         end
       end
@@ -72,6 +80,7 @@ EOF
       keys = I18n::Translate.hash_to_keys(@translate.default).sort
       keys.each do |key|
         value = @translate.find(key, target)
+        next unless value
 
         if value.kind_of?(String)
           fuzzy = (value.to_s.empty?) ? %~ type="unfinished"~ : ""

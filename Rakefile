@@ -20,7 +20,7 @@ Rake::GemPackageTask.new(eval(File.read("i18n-translators-tools.gemspec"))) {|pk
 
 desc "Test with rcov"
 task :rcov do |t| 
-  system "rcov  --exclude .rvm --sort coverage --text-summary -o coverage  test/all.rb"
+  system "rcov  --exclude .rvm,lib/ruby --sort coverage --text-summary --text-coverage-diff -o coverage  test/all.rb"
 end
 
 begin

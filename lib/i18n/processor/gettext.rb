@@ -78,7 +78,7 @@ module I18n::Translate::Processor
 
         # translation
         when %r{^msgstr "(.*)"$}
-          last = "translation"
+          last = "translation" unless last == "po-header"
           entry[last] = uninspect($1.to_s)
 
         # string continuation
@@ -88,8 +88,8 @@ module I18n::Translate::Processor
           elsif last == "po-header"
             case $1
             when %r{^Content-Type: text/plain; charset=(.*)$}
-              enc = $1.to_s.strip
-              @translate[:encoding] = enc unless enc.empty?
+              enc = uninspect($1.to_s).strip
+              @translate.options[:encoding] = enc unless enc.empty?
             when %r{^X-Language: (.*)$}
               # skip language is set from filename
             end

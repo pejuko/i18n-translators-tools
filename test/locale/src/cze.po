@@ -1,3 +1,7 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"X-Language: cze\n"
 
 msgctxt "changed.interpolation"
 msgid "Interpolated changed text '%{var}'"
@@ -20,6 +24,10 @@ msgstr "Změněný jednoduchý text"
 #: src/test.rb:31
 #, fuzzy, incomplete
 #| msgid "Previous untranslated"
+msgctxt "extended.interpolation"
+msgid "Interpolated text '%{var}'"
+msgstr "Interpolovaný text '%{var}'"
+
 msgctxt "simple.interpolation"
 msgid "Interpolated text '%{var}'"
 msgstr "Interpolovaný text '%{var}'"
@@ -37,8 +45,10 @@ msgid "Text to translate"
 msgstr "Text k přeložení"
 
 msgctxt "test.new_line"
-msgid "In this text\nis a new line."
-msgstr "V tomto textu\nje nový řádek."
+msgid "In this text\n"
+"is a new line."
+msgstr "V tomto textu\n"
+"je nový řádek."
 
 msgctxt "test.quote"
 msgid "This text contains \" -- one quote."

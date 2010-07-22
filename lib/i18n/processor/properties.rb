@@ -67,7 +67,7 @@ module I18n::Translate::Processor
         end
 
         # create record in format: key = value
-        str << key << " = " << entry << "\n"
+        str << key << " = " << entry.gsub("\n", "\\n") << "\n"
       end
 
       str

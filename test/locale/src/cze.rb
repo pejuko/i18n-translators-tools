@@ -20,6 +20,20 @@
         "t" => "Změněný jednoduchý text"
       }
     },
+    "extended" => {
+      "interpolation" => {
+        "comment" => "Comment",
+        "extracted_comment" => "Extracted Comment",
+        "reference" => "src/test.rb:31",
+        "file" => "src/test.rb",
+        "line" => "31",
+        "old_default" => "Previous untranslated",
+        "default" => "Interpolated text '%{var}'",
+        "translation" => "Interpolovaný text '%{var}'",
+        "fuzzy" => true,
+        "flag" => "incomplete"
+      }
+    },
     "simple" => {
       "interpolation" => "Interpolovaný text '%{var}'",
       "plural" => {

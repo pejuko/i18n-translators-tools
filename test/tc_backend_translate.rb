@@ -7,7 +7,7 @@
 class TestBackendTranslate < Test::Unit::TestCase
 
   def setup
-    I18n.load_path = Dir[ "#{$src_dir}/default.yml", "#{$src_dir}/*.yml" ]
+    I18n.load_path = Dir[ "#{$src_dir}/default.yml", "#{$src_dir}/cze.yml" ]
     I18n.reload!
   end
 
