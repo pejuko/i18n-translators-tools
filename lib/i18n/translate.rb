@@ -139,7 +139,13 @@ module I18n::Translate
     locales
   end
 
-
+  # create new locale and returns I18n::Translate::Translate object
+  def self.create_locale(lang, opts={})
+    tr = I18n::Translate::Translate.new(lang, opts)
+    tr.assign(tr.merge)
+    tr.export!
+    tr
+  end
 
   # it breaks proc and lambdas objects
   class Translate

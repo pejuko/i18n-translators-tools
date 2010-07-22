@@ -17,7 +17,7 @@ module I18n::Translate::Processor
     end
 
     def export(data)
-      data.ya2yaml
+      data.ya2yaml(:minimum_block_length => 80)
     end
 
   end

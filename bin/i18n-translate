@@ -223,9 +223,7 @@ when 'create'
     exit 2
   end
 
-  tr = I18n::Translate::Translate.new(options[:locale], options.merge({:format => format}))
-  tr.assign(tr.merge)
-  tr.export!
+  tr = I18n::Translate.create_locale(options[:locale], options.merge({:format => format}))
 
   puts "#{tr.options[:locale_dir]}/#{tr.lang}...created" unless options[:quiet]
 
