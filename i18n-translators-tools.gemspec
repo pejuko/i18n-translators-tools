@@ -9,11 +9,12 @@ require 'find'
 spec = Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   s.summary = "I18n transation utility which helps to manage files with locales."
+  s.homepage = "http://github.com/pejuko/i18n-translators-tools"
   s.email = "pejuko@gmail.com"
   s.authors = ["Petr Kovar"]
   s.name = 'i18n-translators-tools'
-  s.version = '0.1.1'
-  s.date = '2010-07-17'
+  s.version = '0.1.5'
+  s.date = '2010-07-22'
   s.add_dependency('i18n', '>= 0.4.1')
   s.add_dependency('ya2yaml')
   s.require_path = 'lib'
@@ -23,6 +24,7 @@ spec = Gem::Specification.new do |s|
   s.description = <<EOF
 This package brings you useful utility which can help you to handle locale files
 and translations in your Ruby projects. Offers also built-in simple console editor.
+Supported formats are YAML, Ruby, Gettext po, QT Linguist TS and Java Properties.
 Read README.md file and run i18n-translate without parameters for more information.
 EOF
 end
