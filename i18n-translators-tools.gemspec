@@ -21,6 +21,44 @@ spec = Gem::Specification.new do |s|
   s.files = ["bin/i18n-translate", "README.md", "i18n-translators-tools.gemspec", "Rakefile"]
   s.files += Dir["lib/**/*.rb", "test/**/*.{rb,yml,po}"]
   s.executables = ["i18n-translate"]
+  s.post_install_message = <<EOF
+=======================================================================
+
+I18N TRANSLATORS TOOLS
+
+-----------------------------------------------------------------------
+
+Supported formats:
+  * yml
+  * rb
+  * ts
+  * po
+  * properties
+
+Backends:
+  * Extended format. i18n-translators-tools bring extended format
+    I18n::Backend::Simple.send(:include, I18n::Backend::Translator)
+  * Gettext po
+    I18n::Backend::Simple.send(:include, I18n::Backend::PO)
+  * QT Linguist TS
+    I18n::Backend::Simple.send(:include, I18n::Backend::TS)
+  * Java Properties files
+    I18n::Backend::Simple.send(:include, I18n::Backend::Properties)
+
+Functions:
+  * merge
+  * convert
+  * translate (built-in simple console translator)
+  * statistics:w
+
+For more information read README.md and CHANGELOG.md
+
+-----------------------------------------------------------------------
+
+http://github.com/pejuko/i18n-translators-tools
+
+=======================================================================
+EOF
   s.description = <<EOF
 This package brings you useful utility which can help you to handle locale files
 and translations in your Ruby projects. Offers also built-in simple console editor.
