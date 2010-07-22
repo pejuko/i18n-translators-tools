@@ -83,4 +83,12 @@
         <translation>Tento text obsahuje \" -- jednu uvozovku.</translation>
     </message>
 </context>
+<context>
+    <name>some text there</name>
+    <message>
+        <source>some text there</source>
+        <translation>tady je nějaký text</translation>
+    </message>
+</context>
+
 </TS>

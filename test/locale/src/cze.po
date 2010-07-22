@@ -53,3 +53,6 @@ msgstr "V tomto textu\n"
 msgctxt "test.quote"
 msgid "This text contains \" -- one quote."
 msgstr "Tento text obsahuje \" -- jednu uvozovku."
+
+msgid "some text there"
+msgstr "tady je nějaký text"

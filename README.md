@@ -11,7 +11,7 @@ Interesting features
 * no database required
 * merging and changes propagation (adding, removing and changed default text)
   keeping default file untouched
-* creating new locale file based on another (usually default) file
+* creating new locale file based default file
 * converting from one format to another (yml <=> rb <=> po <=> ts <=> properties)
 * statistics
 * built-in simple console translator
@@ -189,10 +189,20 @@ Supported formats
 
   Such po file is pretty usable with po editors.
 
-  To use po files generated (e.g: by merge) with i18n-translate you should
-  include this backend istead of I18n::Backend::Gettext
+  To use po files you should include this backend istead of
+  I18n::Backend::Gettext
  
       I18n::Backend::Simple.send(:include, I18n::Backend::PO)
+
+  This backend can also work with natural po files. Just set your app.pot
+  as default and then you can use it:
+
+      I18n.t("some text there")
+
+  or create alias
+
+      def _(*args); I18n.t(*args); end
+      _("some text there")
 
 * **yml**; standard yaml files in I18n simple format
 * **rb**; typical ruby files in I18n simple format

@@ -48,6 +48,7 @@
         "translation" => "V tomto textu\nje nový řádek."
       },
       "quote" => "Tento text obsahuje \" -- jednu uvozovku."
-    }
+    },
+    "some text there" => "tady je nějaký text"
   }
 }

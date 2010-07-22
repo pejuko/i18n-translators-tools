@@ -19,3 +19,4 @@ default:
   test:
     new_line: "In this text\nis a new line."
     quote: "This text contains \" -- one quote."
+  "some text there": "some text there"

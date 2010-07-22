@@ -32,6 +32,7 @@ module I18n::Test
       @trg.write(data)
       assert( File.exists?(@trg_file) )
       data2 = @trg.read
+      diff(data['cze'],data2['cze'])
       assert_equal(data, data2)
       File.unlink(@trg_file)
     end

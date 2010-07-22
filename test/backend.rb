@@ -43,5 +43,9 @@ module I18n::Test
       assert_equal( "Tento text obsahuje \" -- jednu uvozovku.", I18n.t("test.quote") )
     end
 
+    def test_0080_string_key_without_dots
+      assert_equal( "tady je nějaký text", I18n.t("some text there") )
+    end
+
   end
 end
