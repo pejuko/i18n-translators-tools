@@ -6,6 +6,8 @@
 
 $KCODE="UTF8"
 
+$:.unshift File.expand_path(File.join(File.dirname(__FILE__), "../lib"))
+
 def print_help
   print $0
   puts " <command> [options] [locale directory]"
@@ -234,65 +236,9 @@ when 'translate'
     exit 1
   end
 
-  tr = I18n::Translate::Translate.new(options[:locale], options)
-  stat = tr.stat
-  tr.merge.select{|x| x["flag"] != "ok"}.each_with_index do |entry, i|
-    next_entry = false
-    while not next_entry
-      puts ""
-      puts ""
-      puts "(#{i+1}/#{stat[:fuzzy]}) #{entry["key"]} (#{entry["flag"]})"
-      puts "comment: #{entry["comment"]}" unless entry["comment"].empty?
-      puts "old default: #{entry["old_default"]}" unless entry["old_default"].empty?
-      puts "old translation: #{entry["old_t"]}" unless entry["old_t"].empty?
-      puts "default: #{entry["default"]}"
-      puts "translation: #{entry["t"]}"
-      puts ""
-      puts "Actions:"
-      puts "n (next) t (translate) f (change flag) c (comment) s (save) q (save & quit) x(exit no saving)"
-      action = STDIN.readline.strip
-      puts ""
-      case action
-      when 'n'
-        next_entry = true
-      when 't'
-        puts "Enter translation:"
-        entry["t"] = STDIN.readline.strip
-        entry["flag"] = "ok" unless entry["t"].empty?
-        tr.assign( [entry] )
-        puts "Flag sets to #{entry["flag"]}"
-      when 'f'
-        puts "Change flag to:"
-        puts "o (ok), i (incomplete), c (changed), u (untranslated)"
-        f = STDIN.readline.strip
-        I18n::Translate::FLAGS.each do |fname|
-          if fname[0,1] == f
-            entry["flag"] = fname
-            break
-          end
-        end
-        tr.assign( [entry] )
-        puts "Flag sets to #{entry["flag"]}"
-      when 'c'
-        puts "Enter comment:"
-        entry["comment"] = STDIN.readline.strip
-        tr.assign( [entry] )
-        puts "Comment has changed."
-      when 's'
-        tr.export!
-        puts "Translation saved"
-      when 'q'
-        tr.export!
-        puts "Translation saved"
-        exit
-      when 'x'
-        exit
-      end # case
-    end # while
-  end # each_with_index
+  translator = I18n::Translate::Translator.new(options[:locale], options)
+  translator.run
 
-  tr.export!
-  tr.reload!
 else
 
   I18n::Translate.scan(options) do |tr|
