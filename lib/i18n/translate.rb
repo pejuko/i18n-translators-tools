@@ -375,7 +375,7 @@ module I18n::Translate
         fname = Dir[pattern].select{|x| Translate.valid_file?(x)}.first
       end
       fname = "#{@options[:locale_dir]}/#{lang}.#{FORMATS.first}" unless fname
-      File.expand_path(fname)
+      fname
     end
 
     # loads locales from .rb or .yml file
