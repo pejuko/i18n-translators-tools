@@ -60,7 +60,7 @@ module I18n::Translate
         str = hash_to_keys( hash[key], separator, str )
       end
       res << str
-    end
+    end if hash
     res.flatten
   end
 

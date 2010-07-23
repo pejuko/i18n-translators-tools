@@ -49,7 +49,7 @@ Functions:
   * merge
   * convert
   * translate (built-in simple console translator)
-  * statistics:w
+  * statistics
 
 For more information read README.md and CHANGELOG.md
 
