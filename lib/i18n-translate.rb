@@ -12,7 +12,7 @@ require 'i18n/backend/translate'
 require 'i18n/backend/po'
 require 'i18n/backend/ts'
 require 'i18n/backend/properties'
-require 'i18n/processor'
 require 'i18n/translate'
+require 'i18n/processor'
 require 'i18n/translator'
 

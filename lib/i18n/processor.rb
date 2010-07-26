@@ -37,6 +37,12 @@ module I18n::Translate
       nil
     end
 
+    def self.init(default='yml')
+      @processors.each do |processor|
+        processor.register(default)
+      end
+    end
+
 
     class Template
       FORMAT = []
@@ -52,6 +58,19 @@ module I18n::Translate
         @translate = tr
         fname =~ %r{/?([^/]+)\.[^\.]+$}i
         @lang = $1.to_s.strip
+      end
+
+      def self.register(default='yml')
+        self::FORMAT.each do |format|
+          unless I18n::Translate::FORMATS.include?(format)
+            # default format will be first
+            if default == format
+              I18n::Translate::FORMATS.unshift(format)
+            else
+              I18n::Translate::FORMATS << format
+            end
+          end
+        end
       end
 
       def read
@@ -130,3 +149,6 @@ require 'i18n/processor/gettext'
 require 'i18n/processor/ts'
 require 'i18n/processor/properties'
 
+
+# initialize all registred processors
+I18n::Translate::Processor.init

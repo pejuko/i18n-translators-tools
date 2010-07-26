@@ -49,7 +49,10 @@ require 'find'
 module I18n::Translate
 
   FLAGS = %w(ok incomplete changed untranslated)
-  FORMATS = %w(yml rb po pot ts properties)       # the first one is preferred if :format => auto
+  #FORMATS = %w(yml rb po pot ts properties)       # the first one is preferred if :format => auto
+  # function I18n::Translate::Processor.init will register known
+  # formats
+  FORMATS = %w() # the first one is preferred if :format => auto
 
   # returns flat array of all keys e.g. ["system.message.ok", "system.message.error", ...]
   def self.hash_to_keys(hash, separator=".", prefix="")
