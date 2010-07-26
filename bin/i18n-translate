@@ -64,7 +64,7 @@ CONFIG FILE
 
          Example:
 
-         options = {
+         {
            :exclude => ['rules'],
            :verbose => true,
            :format => 'yml',
@@ -162,7 +162,7 @@ opts = GetoptLong.new(
 # setting up default options
 user_config_file = File.join(ENV["HOME"], ".config/ruby/i18n-translate")
 options = I18n::Translate::Translate::DEFAULT_OPTIONS.dup
-options.merge!(eval( File.read(user_config_file) )) if File.exists?(user_config_file)
+options.merge!(I18n::Translate.read_config(user_config_file)) if File.exists?(user_config_file)
 options[:exclude] ||= []
 
 
@@ -199,7 +199,7 @@ end
 locale_dir = tmp[:locale_dir] ? tmp[:locale_dir] : options[:locale_dir]
 # reading project locale config options
 locale_config_file = File.join(locale_dir, ".i18n-translate")
-options.merge!(eval( File.read(locale_config_file) )) if File.exists?(locale_config_file)
+options.merge!(I18n::Translate.read_config(locale_config_file)) if File.exists?(locale_config_file)
 
 # merge command line arguments
 options.merge!(tmp)

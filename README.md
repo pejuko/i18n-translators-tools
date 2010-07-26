@@ -116,6 +116,7 @@ So in your application you should do something like this:
     I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
     I18n.default_locale = 'default'
     I18n.load_path << Dir[ File.expand_path("../locale/*.yml", __FILE__) ]
+    I18n.locale = 'cs'
 
 and then you can use
 

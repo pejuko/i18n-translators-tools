@@ -54,6 +54,12 @@ module I18n::Translate
   # formats
   FORMATS = %w() # the first one is preferred if :format => auto
 
+  # read configuration file
+  # config format is ruby file which returns hash
+  def self.read_config(filename)
+    eval File.read(filename)
+  end
+
   # returns flat array of all keys e.g. ["system.message.ok", "system.message.error", ...]
   def self.hash_to_keys(hash, separator=".", prefix="")
     res = []
