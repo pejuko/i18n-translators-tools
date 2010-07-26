@@ -6,7 +6,7 @@
 module I18n::Translate::Processor
 
   class Properties < Template
-    FORMAT = ['properties', 'java']
+    FORMAT = ['properties']
 
   protected
 

@@ -9,7 +9,7 @@ require 'cgi'
 module I18n::Translate::Processor
 
   class TS < Template
-    FORMAT = ['ts', 'qt']
+    FORMAT = ['ts']
 
   protected
 
