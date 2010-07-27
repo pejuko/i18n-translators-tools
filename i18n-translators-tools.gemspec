@@ -13,8 +13,8 @@ spec = Gem::Specification.new do |s|
   s.email = "pejuko@gmail.com"
   s.authors = ["Petr Kovar"]
   s.name = 'i18n-translators-tools'
-  s.version = '0.1.5'
-  s.date = '2010-07-22'
+  s.version = '0.2'
+  s.date = '2010-07-27'
   s.add_dependency('i18n', '>= 0.4.1')
   s.add_dependency('ya2yaml')
   s.require_path = 'lib'
