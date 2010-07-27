@@ -2,7 +2,7 @@ v0.2.1
 ======
 
 * fix: I18n::Backend::Translate now returns nil if translation is empty string
-       (this allows fallback)
+  (this allows fallback)
 
 
 v0.2.0
