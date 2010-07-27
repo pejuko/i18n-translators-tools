@@ -26,6 +26,8 @@ cze:
       translation: "Interpolovaný text '%{var}'"
       fuzzy: true
       flag: incomplete
+  missing:
+    empty: ""
   simple:
     text: Text k přeložení
     interpolation: "Interpolovaný text '%{var}'"

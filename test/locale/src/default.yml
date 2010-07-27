@@ -10,6 +10,7 @@ default:
     interpolation: "Interpolated text '%{var}'"
   missing:
     fallback: "This text is only in default"
+    empty: "Empty string"
   simple:
     text: Text to translate
     interpolation: "Interpolated text '%{var}'"

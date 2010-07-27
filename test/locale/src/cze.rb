@@ -34,6 +34,7 @@
         "flag" => "incomplete"
       }
     },
+    "missing" => { "empty" => "" },
     "simple" => {
       "interpolation" => "Interpolovaný text '%{var}'",
       "plural" => {

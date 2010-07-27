@@ -28,6 +28,10 @@ msgctxt "extended.interpolation"
 msgid "Interpolated text '%{var}'"
 msgstr "Interpolovaný text '%{var}'"
 
+msgctxt "missing.empty"
+msgid "Empty string"
+msgstr ""
+
 msgctxt "simple.interpolation"
 msgid "Interpolated text '%{var}'"
 msgstr "Interpolovaný text '%{var}'"

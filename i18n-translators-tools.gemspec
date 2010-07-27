@@ -13,7 +13,7 @@ spec = Gem::Specification.new do |s|
   s.email = "pejuko@gmail.com"
   s.authors = ["Petr Kovar"]
   s.name = 'i18n-translators-tools'
-  s.version = '0.2'
+  s.version = '0.2.1'
   s.date = '2010-07-27'
   s.add_dependency('i18n', '>= 0.4.1')
   s.add_dependency('ya2yaml')
@@ -50,6 +50,10 @@ Functions:
   * convert
   * translate (built-in simple console translator)
   * statistics
+
+v0.2.1
+  * fix: I18n::Backend::Translate now returns nil if translation is empty string
+         (this allows fallbacks)
 
 For more information read README.md and CHANGELOG.md
 

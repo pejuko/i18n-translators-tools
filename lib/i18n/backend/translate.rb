@@ -19,10 +19,13 @@ module I18n
       # the simple and the Translator's
       def translate(locale, key, options = {})
         result = super(locale, key, options)
+        return nil if result.kind_of?(String) and result.empty?
         return result unless result.kind_of?(Hash)
         return nil unless result[:t] or result[:translation]
 
         tr = result[:translation] || result[:t]
+        return nil if tr.to_s.empty?
+
         values = options.except(*I18n::Backend::Base::RESERVED_KEYS)
 
         tr = resolve(locale, key, tr, options)

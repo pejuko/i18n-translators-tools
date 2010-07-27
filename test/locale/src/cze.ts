@@ -42,6 +42,13 @@
     </message>
 </context>
 <context>
+    <name>missing.empty</name>
+    <message>
+        <source>Empty string</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>simple.interpolation</name>
     <message>
         <source>Interpolated text &apos;%{var}&apos;</source>

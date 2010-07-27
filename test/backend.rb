@@ -35,15 +35,19 @@ module I18n::Test
       assert_equal( "This text is only in default", I18n.t("missing.fallback") )
     end
 
-    def test_0080_new_line
+    def test_0080_I18n_fallback_empty_string
+      assert_equal( "Empty string", I18n.t("missing.empty") )
+    end
+
+    def test_0090_new_line
       assert_equal( "V tomto textu\nje nový řádek.", I18n.t("test.new_line") )
     end
 
-    def test_0080_quote
+    def test_0100_quote
       assert_equal( "Tento text obsahuje \" -- jednu uvozovku.", I18n.t("test.quote") )
     end
 
-    def test_0080_string_key_without_dots
+    def test_0110_string_key_without_dots
       assert_equal( "tady je nějaký text", I18n.t("some text there") )
     end
 

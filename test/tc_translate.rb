@@ -74,6 +74,7 @@ class TestTranslate < Test::Unit::TestCase
     assert(trb.kind_of?(I18n::Translate::Translate))
     assert_equal(File.join(File.expand_path($src_dir), 'cze.rb'), trb.lang_file)
     assert_equal(@t.default, trb.default)
+    diff(@t.target, trb.target)
     assert_equal(@t.target, trb.target)
   end
 

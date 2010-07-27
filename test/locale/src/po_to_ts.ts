@@ -29,6 +29,11 @@
         <translation>Změněný jednoduchý text</translation>
     </message>
     <message>
+        <source>Empty string</source>
+        <comment>missing.empty</comment>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="src/test.rb" line="31"/>
         <source>Interpolated text &apos;%{var}&apos;</source>
         <oldsource>Previous untranslated</oldsource>
