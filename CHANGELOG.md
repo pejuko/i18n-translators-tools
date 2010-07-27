@@ -18,6 +18,8 @@ v0.2.0
 * **PO attributes** Now are supported (understand remain untouched) extra
   attributes #. (extracted comment) and #: (reference)
 
+* **PO header** simple header containing language and file encoding is created
+
 * **added support for TS format** If your translators want to use QT Linguist
   for translations. Convert to this format.
 
