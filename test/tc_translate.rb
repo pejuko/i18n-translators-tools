@@ -118,7 +118,7 @@ class TestTranslateTools < Test::Unit::TestCase
   end
 
   def test_0012_scan_list_files_exclude
-    locales = I18n::Translate.scan(:locale_dir => $src_dir, :exclude => 'yml').map{ |x| x =~ /\/([^\/]+)$/; $1 }.sort
+    locales = I18n::Translate.scan(:locale_dir => $src_dir, :exclude => ['yml']).map{ |x| x =~ /\/([^\/]+)$/; $1 }.sort
     assert_equal( %w(cze.po cze.properties cze.rb cze.ts po_to_ts.ts).sort, locales )
   end
 
@@ -128,7 +128,7 @@ class TestTranslateTools < Test::Unit::TestCase
   end
 
   def test_0013_scan_list_deep_exclude
-    locales = I18n::Translate.scan(:locale_dir => $src_dir, :deep => true, :exclude => 'cze').map{ |x| x =~ /\/([^\/]+)$/; $1 }.sort
+    locales = I18n::Translate.scan(:locale_dir => $src_dir, :deep => true, :exclude => ['cze']).map{ |x| x =~ /\/([^\/]+)$/; $1 }.sort
     assert_equal( %w(eng.yml po_to_ts.ts).sort, locales )
   end
 
