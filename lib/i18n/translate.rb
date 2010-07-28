@@ -173,9 +173,18 @@ module I18n::Translate
     def initialize(lang, opts={})
       @lang = lang.to_s
       raise "Empty locale" if @lang.empty? and not opts[:empty]
-      @options = DEFAULT_OPTIONS.merge(opts)
-      @options[:default_format] ||= @options[:format]
 
+      # merge options
+      @options = DEFAULT_OPTIONS.merge(opts)
+
+      # select default format
+      @options[:default_format] ||= @options[:format]
+      if (@options[:default_format] == @options[:format]) and not opts[:default_format]
+        dfname = file_name(@options[:default], @options[:default_format])
+        @options[:default_format] = "auto" unless File.exists?(dfname)
+      end
+
+      # load default data and translation
       if @lang and not opts[:empty]
         @default, @default_file = load_locale( @options[:default], @options[:default_format] )
         @target, @lang_file = load_locale( @lang )

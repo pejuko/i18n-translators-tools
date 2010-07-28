@@ -1,3 +1,11 @@
+v0.2.2
+======
+
+* fix: don't merge if default file doesn't exist
+* fix: for default format autodetection works again
+* merge can be more verbose
+
+
 v0.2.1
 ======
 

@@ -115,9 +115,14 @@ def process_locale(tr, command, opts)
     msg="striped"
     save_locale = true
   when 'merge'
-    tr.assign(tr.merge)
-    msg="merged"
-    save_locale = true
+    if File.exists?(tr.default_file)
+      tr.assign(tr.merge)
+      msg="merged"
+      msg << " with #{tr.default_file}" if options[:verbose]
+      save_locale = true
+    else
+      msg="no default file (expected: #{tr.default_file})"
+    end
   when 'convert'
     tr.options[:format] = options[:target]
     msg="converted"
