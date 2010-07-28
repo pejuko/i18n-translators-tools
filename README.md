@@ -1,8 +1,8 @@
 I18n translation and locales management utility
 ===============================================
 
-This package brings you useful utility which can help you to handle locale files
-and translations in your Ruby projects.
+This package brings you useful utility and library which can help you to handle
+locale files and translations in your Ruby projects.
 
 
 Interesting features
