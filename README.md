@@ -11,7 +11,7 @@ Interesting features
 * no database required
 * merging and changes propagation (adding, removing and changed default text)
   keeping default file untouched
-* creating new locale file based default file
+* creating new locale file based on default file
 * converting from one format to another (yml <=> rb <=> po <=> ts <=> properties)
 * statistics
 * built-in simple console translator
@@ -58,6 +58,35 @@ WARNING
   put all your rules to separate file and use exclude (repeatable) argument
   or create configuration file for your project in locales directory including
   exclude array.
+* **in your set of keys in leaf can't be ALL keys reserved words**
+  this is ok:
+
+      en:
+        my:
+          key:
+            message: "some message"
+            reference: "http://..."
+
+  but this is NOT
+
+      en:
+        my:
+          key:
+            reference: "http://..."
+
+  **Reserved keywords are: **
+  * comment
+  * default
+  * extracted_comment
+  * file
+  * flag
+  * fuzzy
+  * line
+  * old
+  * old_default
+  * reference
+  * t
+  * translation
 * **po files are supported only partialy.** If you convert from yaml or ruby to
   po and back you don't have to care even if you are using pluralization.
   If you are converting from po origin files then you can lose header of the
@@ -105,8 +134,7 @@ can native speakers put their polished english. I think it is good thing
 to put all default strings into separate file(s). If you need to change
 some text you don't have to touch source code.
 
-Default files have to be in the I18n simple format. The enhanced format
-is only for locales.
+_(Default files can be now in enhanced format.)_
 
 So in your application you should do something like this:
 
@@ -135,6 +163,11 @@ untranslated strings this can fix the problem.
 
 Examples
 --------
+
+**Simple conversion from one file format to another:**
+
+    $> i18n-translate cze.yml cze.po
+    $> i18n-translate cze.po cze.properties
 
 Suppose we have our locales in 'locale/' directory without sub-directories and
 default values are inside 'locale/default.yml' file. And we have two files
@@ -237,6 +270,10 @@ New format looks like:
       old_default: "old default string"
       default: "new default string"
       comment: "translator's comments"
+      extracted_comment: "po extracted comment"
+      reference: "po's reference"
+      file: "file parsed from reference"
+      line: "line parsed from po reference"
       translation: "translation itself"
       flag: "one of (ok || incomplete || changed || untranslated)"
       fuzzy: true # exists only where flag != ok (nice to have when you want
@@ -258,8 +295,8 @@ Pluralized variant should look like:
 
 As you can see the old format is string and the new format is hash.
 If you use lambdas and procs objects, you should save them in separate
-file(s) because i18n-translate utility can't handle them but Translate backend
-can.
+file(s) in different (sub)directory because i18n-translate utility can't
+handle them but Translate backend can.
 
 
 Configure file format

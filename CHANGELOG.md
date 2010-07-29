@@ -1,3 +1,12 @@
+v 0.2.3
+=======
+
+* fix: hash_to_keys can work with enhanced format => default can be in
+  enhanced format
+* i18n-translate <source file> <target file>
+  automaticlay perform convert action from one file to another
+
+
 v0.2.2
 ======
 

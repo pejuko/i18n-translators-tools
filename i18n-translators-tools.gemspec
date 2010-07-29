@@ -13,7 +13,7 @@ spec = Gem::Specification.new do |s|
   s.email = "pejuko@gmail.com"
   s.authors = ["Petr Kovar"]
   s.name = 'i18n-translators-tools'
-  s.version = '0.2.2'
+  s.version = '0.2.3'
   s.date = Time.now.strftime("%Y-%m-%d")
   s.add_dependency('i18n', '>= 0.4.1')
   s.add_dependency('ya2yaml')
@@ -60,6 +60,12 @@ Changelog:
     * fix: don't merge if default file doesn't exist (locale stays untouched)
     * fix: for default format autodetection works again
     * merge can be more verbose
+
+  v0.2.3
+    * fix: hash_to_keys can work with enhanced format => default can be in
+      enchanced format
+    * i18n-translate <source file> <target file>
+      automaticlay perform convert action from one file to another
 
 For more information read README.md and CHANGELOG.md
 
