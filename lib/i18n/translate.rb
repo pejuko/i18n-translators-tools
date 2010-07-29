@@ -53,6 +53,7 @@ module I18n::Translate
   # function I18n::Translate::Processor.init will register known
   # formats
   FORMATS = %w() # the first one is preferred if :format => auto
+  RESERVED_WORDS = %w(comment extracted_comment reference file line default old_default fuzzy flag translation old t)
 
   # read configuration file
   # config format is ruby file which returns hash
@@ -60,12 +61,22 @@ module I18n::Translate
     eval File.read(filename)
   end
 
+  # checks if all keys are reserved keywords
+  def self.is_enhanced?(hash)
+    return false unless hash.kind_of?(Hash)
+    hash.keys.each do |key|
+      return false unless I18n::Translate::RESERVED_WORDS.include?(key)
+    end
+    true
+  end
+
   # returns flat array of all keys e.g. ["system.message.ok", "system.message.error", ...]
   def self.hash_to_keys(hash, separator=".", prefix="")
     res = []
     hash.keys.each do |key|
       str = prefix.empty? ? key : "#{prefix}#{separator}#{key}"
-      if hash[key].kind_of?(Hash)
+      enhanced = I18n::Translate.is_enhanced?(hash[key])
+      if hash[key].kind_of?(Hash) and (not enhanced)
         str = hash_to_keys( hash[key], separator, str )
       end
       res << str
