@@ -82,16 +82,6 @@ CONFIG FILE
 end
 
 
-COMMANDS = %w(list stat create merge convert strip translate)
-command = ARGV.shift
-
-unless COMMANDS.include?(command)
-  print_help()
-  exit
-end
-
-
-
 begin
   require 'rubygems'
 rescue
@@ -99,6 +89,40 @@ end
 
 require 'i18n'
 require 'i18n-translate'
+
+
+# converts from one file format to another
+def convert(src, trg)
+  fname = File.basename(src)
+  tfname = File.basename(trg)
+  lang, format = $1, $2 if fname =~ /(.*)\.([^\.]*)$/
+  raise "bad file name '#{src}'" unless lang and format
+  tlang, tformat = $1, $2 if fname =~ /(.*)\.([^\.]*)$/
+  raise "bad file name '#{src}'" unless tlang and tformat
+
+  dir = File.dirname(src)
+  opts = {:locale_dir => dir, :locale => lang, :format => format, :default => lang}
+  tr = I18n::Translate::Translate.new(lang, opts)
+  data = {tlang => tr.target}
+  I18n::Translate::Processor.write(trg, data, tr)
+end
+
+
+COMMANDS = %w(list stat create merge convert strip translate)
+command = ARGV.shift
+
+unless COMMANDS.include?(command)
+  if (ARGV.size == 1) and File.exists?(command)
+    if File.exists?(ARGV[0])
+      puts "!!! convert fails: file #{ARGV[0]} exists"
+      exit
+    end
+    convert(command, ARGV[0])
+    exit
+  end
+  print_help()
+  exit
+end
 
 
 def process_locale(tr, command, opts)
