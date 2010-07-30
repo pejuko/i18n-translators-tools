@@ -51,5 +51,9 @@ module I18n::Test
       assert_equal( "tady je nějaký text", I18n.t("some text there") )
     end
 
+    def test_0120_enhanced_default_returns_default_if_translation_is_missing
+      assert_equal( "this is a key", I18n.t("test.enhanced") )
+    end
+
   end
 end

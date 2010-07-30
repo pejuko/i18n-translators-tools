@@ -21,9 +21,11 @@ module I18n
         result = super(locale, key, options)
         return nil if result.kind_of?(String) and result.empty?
         return result unless result.kind_of?(Hash)
-        return nil unless result[:t] or result[:translation]
+        return nil unless result[:t] or result[:translation] or result[:default]
 
         tr = result[:translation] || result[:t]
+        tr = result[:default] if tr.to_s.empty?
+
         return nil if tr.to_s.empty?
 
         values = options.except(*I18n::Backend::Base::RESERVED_KEYS)

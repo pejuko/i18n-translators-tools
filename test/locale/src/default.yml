@@ -20,4 +20,6 @@ default:
   test:
     new_line: "In this text\nis a new line."
     quote: "This text contains \" -- one quote."
+    enhanced:
+      default: "this is a key"
   "some text there": "some text there"
