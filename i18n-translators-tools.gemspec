@@ -64,6 +64,7 @@ Changelog:
   v0.2.3
     * fix: hash_to_keys can work with enhanced format => default can be in
       enchanced format
+    * default file can be now in enhanced format. if translation field is missing
     * i18n-translate <source file> <target file>
       automaticlay perform convert action from one file to another
 
