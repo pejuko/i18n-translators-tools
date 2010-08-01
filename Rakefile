@@ -47,5 +47,5 @@ begin
     build_document("CHANGELOG.md")
   end
 
-rescue
+rescue LoadError
 end
