@@ -37,7 +37,7 @@ Supported formats:
 
 Backends:
   * Extended format. i18n-translators-tools brings extended format
-    I18n::Backend::Simple.send(:include, I18n::Backend::Translator)
+    I18n::Backend::Simple.send(:include, I18n::Backend::Translate)
   * Gettext po
     I18n::Backend::Simple.send(:include, I18n::Backend::PO)
   * QT Linguist TS

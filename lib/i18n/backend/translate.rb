@@ -8,7 +8,7 @@ module I18n
   module Backend
     # It is highly recommended to use Translator wit Fallback plugin
     #
-    #   I18n::Backend::Simple.send(:include, I18n::Backend::Translator)
+    #   I18n::Backend::Simple.send(:include, I18n::Backend::Translate)
     #   I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
     #
     # notice that Translator have to be included BEFORE Fallback otherwise
