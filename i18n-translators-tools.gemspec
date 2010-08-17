@@ -77,10 +77,13 @@ http://github.com/pejuko/i18n-translators-tools
 EOF
   s.description = <<EOF
 This package brings you useful utility and library which can help you to handle
-locale files and translations in your Ruby projects. Offers also built-in simple
-console editor. Supported formats are YAML, Ruby, Gettext po, QT Linguist TS and
-Java Properties. Read README.md file and run i18n-translate without parameters
-for more information.
+locale files and translations in your Ruby projects.
+It is build upon i18n library and extends it's simple format so you can simply
+track field changes or keep translator's notes. Conversion back to simple format
+is possible and as simple as call 'i18n-translate strip'. Offers also built-in
+simple console editor. Supported formats are YAML, Ruby, Gettext po,
+QT Linguist TS and Java Properties. Read README.md file and run i18n-translate
+without parameters for more information.
 EOF
 end
 
