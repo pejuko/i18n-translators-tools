@@ -53,6 +53,7 @@ module I18n::Translate::Processor
           entry["comment"] = get(message, "translatorcomment").to_s.strip
           entry["translation"] = get(message, "translation")
           fuzzy = get(message, "translation", "type").to_s.strip
+          entry["flag"] = fuzzy if fuzzy == "obsolete"
           entry["fuzzy"] = true unless fuzzy.empty?
           flag = get(message, "extra-po-flags").to_s.strip
           entry["flag"] = flag unless flag.empty?
@@ -94,7 +95,7 @@ EOF
     </context>
 EOF
         else
-          fuzzy = ((value["flag"] == "ok") or value["flag"].to_s.strip.empty?) ? "" : %~ type="unfinished"~
+          fuzzy = ((value["flag"] == "ok") or value["flag"].to_s.strip.empty?) ? "" : (value["flag"] == "obsolete") ? %~ type="obsolete"~ : %~ type="unfinished"~
           xml += <<EOF
     <context>
         <name>#{::CGI.escapeHTML(key)}</name>

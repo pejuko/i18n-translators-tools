@@ -14,6 +14,8 @@ Interesting features
 * no database required
 * merging and changes propagation (adding, removing and changed default text)
   keeping default file untouched
+* hard/soft merging (hard deletes extra keys from target, soft set them
+  obsolete; default is soft)
 * creating new locale file based on default file
 * converting from one format to another (yml <=> rb <=> po <=> ts <=> properties)
 * statistics
@@ -278,7 +280,7 @@ New format looks like:
       file: "file parsed from reference"
       line: "line parsed from po reference"
       translation: "translation itself"
-      flag: "one of (ok || incomplete || changed || untranslated)"
+      flag: "one of (ok || incomplete || changed || untranslated || obsolete)"
       fuzzy: true # exists only where flag != ok (nice to have when you want
                     edit files manually)
 

@@ -1,6 +1,7 @@
 *~
 *.swp
 *.bak
+*.rbc
 pkg
 coverage
 README.html

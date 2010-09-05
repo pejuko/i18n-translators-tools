@@ -8,6 +8,10 @@ v0.3
   - proper java escaping for properties
 * enhance TS support
 * enhance PO support
+* hard and soft merging
+  - hard delete from target keys which are not in default
+  - soft keep them and set flag to obsolete
+* autoload library
 
 
 v0.4

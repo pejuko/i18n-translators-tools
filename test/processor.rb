@@ -10,7 +10,7 @@ module I18n::Test
     def __prepare(processor, file)
       # prepare object with correct data from yaml
       @tr = I18n::Translate::Translate.new('cze', {:locale_dir => $src_dir, :default_format => 'yml', :format => 'yml'})
-      @tr.assign(@tr.target)
+      @tr.assign(@tr.merge)
 
       # prepare reader and writer
       @src_file = File.join($src_dir, file)
