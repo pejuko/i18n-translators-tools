@@ -6,6 +6,7 @@ v0.2.4
   obsolete
 * processors now generate keys list from provided data and not from @tr.default
 * flag obsolete added
+* delete function
 
 
 v0.2.3

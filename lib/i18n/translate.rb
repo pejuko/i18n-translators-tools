@@ -295,6 +295,11 @@ module I18n::Translate
       I18n::Translate.find(key, hash, separator)
     end
 
+    def delete(key)
+      I18n::Translate.delete(key, @default, @options[:separator])
+      I18n::Translate.delete(key, @target, @options[:separator])
+    end
+
     # will create path in @target for 'key' and set the 'value'
     def []=(key, value)
       I18n::Translate.set(key, value, @target, @options[:separator])
