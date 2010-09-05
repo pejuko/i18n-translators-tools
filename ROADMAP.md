@@ -12,6 +12,7 @@ v0.3
   - hard delete from target keys which are not in default
   - soft keep them and set flag to obsolete
 * autoload library
+* add tests for delete
 
 
 v0.4

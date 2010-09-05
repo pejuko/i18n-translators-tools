@@ -73,7 +73,7 @@ Changelog:
       obsolete
     * processors now generate keys list from provided data and not from @tr.default
     * flag obsolete added
-
+    * delete function
 
 For more information read README.md and CHANGELOG.md
 

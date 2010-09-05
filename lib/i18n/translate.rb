@@ -113,7 +113,7 @@ module I18n::Translate
     path = key.split(separator)
     set(key, nil, hash, separator)
     i = path.size - 1
-    while i > 0
+    while i >= 0
       k = path[0..i].join(separator)
       trg = find(k, hash, separator)
       if trg and trg.kind_of?(Hash) and trg.empty?
