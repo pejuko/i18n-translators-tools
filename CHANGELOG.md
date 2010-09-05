@@ -1,5 +1,5 @@
-v0.3
-====
+v0.2.4
+======
 
 * enhanced support for java properties
 * hard/soft merges. hard deletes deleted keys in target and soft set them to
