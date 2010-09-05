@@ -77,7 +77,7 @@ module I18n::Translate::Processor
 <TS version="2.0" language="#{@translate.lang}">
 EOF
 
-      keys = I18n::Translate.hash_to_keys(@translate.default).sort
+      keys = I18n::Translate.hash_to_keys(target).sort
       keys.each do |key|
         value = @translate.find(key, target)
         next unless value

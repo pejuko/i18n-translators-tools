@@ -68,7 +68,7 @@ module I18n::Translate::Processor
     def export(data)
       target = data[@translate.lang]
       str = ""
-      keys = I18n::Translate.hash_to_keys(@translate.default).sort
+      keys = I18n::Translate.hash_to_keys(target).sort
 
       keys.each do |key|
         value = @translate.find(key, target)
