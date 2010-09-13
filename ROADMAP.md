@@ -19,3 +19,9 @@ v0.4
 ----
 
 * XLIFF support
+
+
+v1.0
+----
+
+* TM
