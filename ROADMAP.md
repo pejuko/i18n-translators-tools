@@ -25,3 +25,4 @@ v1.0
 ----
 
 * TM
+* using string scanners in processors?
