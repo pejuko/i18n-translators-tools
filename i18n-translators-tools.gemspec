@@ -13,7 +13,7 @@ spec = Gem::Specification.new do |s|
   s.email = "pejuko@gmail.com"
   s.authors = ["Petr Kovar"]
   s.name = 'i18n-translators-tools'
-  s.version = '0.2.3'
+  s.version = '0.2.4'
   s.date = Time.now.strftime("%Y-%m-%d")
   s.add_dependency('i18n', '>= 0.4.1')
   s.add_dependency('ya2yaml')
@@ -37,7 +37,7 @@ Supported formats:
 
 Backends:
   * Extended format. i18n-translators-tools brings extended format
-    I18n::Backend::Simple.send(:include, I18n::Backend::Translator)
+    I18n::Backend::Simple.send(:include, I18n::Backend::Translate)
   * Gettext po
     I18n::Backend::Simple.send(:include, I18n::Backend::PO)
   * QT Linguist TS
@@ -68,6 +68,14 @@ Changelog:
     * i18n-translate <source file> <target file>
       automaticlay perform convert action from one file to another
 
+  v0.2.4
+    * enhanced support for java properties
+    * hard/soft merges. hard deletes deleted keys in target and soft set them to
+      obsolete
+    * processors now generate keys list from provided data and not from @tr.default
+    * flag obsolete added
+    * delete function
+
 For more information read README.md and CHANGELOG.md
 
 -----------------------------------------------------------------------------
@@ -78,10 +86,13 @@ http://github.com/pejuko/i18n-translators-tools
 EOF
   s.description = <<EOF
 This package brings you useful utility and library which can help you to handle
-locale files and translations in your Ruby projects. Offers also built-in simple
-console editor. Supported formats are YAML, Ruby, Gettext po, QT Linguist TS and
-Java Properties. Read README.md file and run i18n-translate without parameters
-for more information.
+locale files and translations in your Ruby projects.
+It is build upon i18n library and extends it's simple format so you can simply
+track field changes or keep translator's notes. Conversion back to simple format
+is possible and as simple as call 'i18n-translate strip'. Offers also built-in
+simple console editor. Supported formats are YAML, Ruby, Gettext po,
+QT Linguist TS and Java Properties. Read README.md file and run i18n-translate
+without parameters for more information.
 EOF
 end
 

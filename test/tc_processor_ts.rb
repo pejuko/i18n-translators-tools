@@ -12,7 +12,7 @@ class TestProcessorTS < Test::Unit::TestCase
 
   include I18n::Test::Processor
 
-    def test_0030_read_po_to_ts
+    def test_1010_read_po_to_ts
       t = I18n::Translate::Translate.new('cze', {:locale_dir => $src_dir, :default_format => 'yml', :format => 'yml'})
       file = File.join($src_dir, 'po_to_ts.ts')
       reader = I18n::Translate::Processor::TS.new(file, t)

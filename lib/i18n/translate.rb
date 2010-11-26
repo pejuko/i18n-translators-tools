@@ -28,7 +28,7 @@ require 'find'
 #   extracted_comment: po compatibility
 #   file: file where it is # po compatibility
 #   line: the lines, where is this key used #  po compatibility
-#   flag: ok || incomplete || changed || untranslated
+#   flag: ok || incomplete || changed || untranslated || obsolete
 #   fuzzy: true # exists only where flag != ok (nice to have when you want
 #                 edit files manualy)
 #
@@ -48,7 +48,7 @@ require 'find'
 #
 module I18n::Translate
 
-  FLAGS = %w(ok incomplete changed untranslated)
+  FLAGS = %w(ok incomplete changed untranslated obsolete)
   #FORMATS = %w(yml rb po pot ts properties)       # the first one is preferred if :format => auto
   # function I18n::Translate::Processor.init will register known
   # formats
@@ -103,9 +103,23 @@ module I18n::Translate
       h = h[chunk]
     end
     unless value
-      h[path[-1]] = nil
+      h.delete(path[-1])
     else
       h[path[-1]] = value
+    end
+  end
+
+  def self.delete(key, hash, separator=".")
+    path = key.split(separator)
+    set(key, nil, hash, separator)
+    i = path.size - 1
+    while i >= 0
+      k = path[0..i].join(separator)
+      trg = find(k, hash, separator)
+      if trg and trg.kind_of?(Hash) and trg.empty?
+        set(k, nil, hash, separator)
+      end
+      i -= 1
     end
   end
 
@@ -175,7 +189,8 @@ module I18n::Translate
       :default => "default",   # default name for file containing default app's key => string
       :force_encoding => true, # in ruby 1.9 forces string encoding
       :encoding => "utf-8",    # encoding name to be forced to
-      :format => "auto"        # auto, rb, yml
+      :format => "auto",       # auto, rb, yml
+      :merge => "soft",        # hard or soft: hard strips old keys from target and soft set it to obsolete
     }
 
     attr_reader :default, :target, :merge, :options, :lang, :default_file, :lang_file
@@ -225,8 +240,9 @@ module I18n::Translate
     #     'old_translation' => '',      # if flag == 'changed' then old_translation = t and t = ''
     #     'translation' => '',          # value set in target file
     #     'comment' => ''               # a comment added by a translator
-    #     'flag' => ok || incomplete || changed || untranslated    # set by merging tool except incomplete
-    #                                                               which is set by translator
+    #     'flag' => ok || incomplete || changed || untranslated || obsolete
+    #                                   # set by merging tool except incomplete
+    #                                     which is set by translator
     #    # other keys helded for compatibility with other formats
     #   }
     def [](key)
@@ -277,6 +293,11 @@ module I18n::Translate
     # wrapper for I18n::Translate.find with presets options
     def find(key, hash=@target, separator=@options[:separator])
       I18n::Translate.find(key, hash, separator)
+    end
+
+    def delete(key)
+      I18n::Translate.delete(key, @default, @options[:separator])
+      I18n::Translate.delete(key, @target, @options[:separator])
     end
 
     # will create path in @target for 'key' and set the 'value'
@@ -346,6 +367,32 @@ module I18n::Translate
 
         self[key] = trg
       end
+      obsolete!
+    end
+
+    def obsolete!(merge = @options[:merge])
+      def_keys = I18n::Translate.hash_to_keys(@default, @options[:separator]).sort
+      trg_keys = I18n::Translate.hash_to_keys(@target, @options[:separator]).sort
+
+      obsolete_keys = trg_keys - def_keys
+      obsolete_keys.each do |key|
+        if merge == "hard"
+          I18n::Translate.delete(key, @target, @options[:separator])
+          next
+        end
+
+        trg = find(key)
+        next unless trg
+
+        if trg.kind_of?(String)
+          trg = {"translation" => trg, "flag" => "obsolete"}
+        else
+          trg["flag"] = "obsolete"
+          trg["fuzzy"] = true
+        end
+
+        I18n::Translate.set(key, trg, @target, @options[:separator])
+      end
     end
 
     # re-read @target data from the disk and create @merge
@@ -380,7 +427,7 @@ module I18n::Translate
     end
 
     # returns statistics hash
-    # {:total => N, :ok => N, :changed => N, :incomplete => N, :untranslated => N, :fuzzy => N, :progress => N}
+    # {:total => N, :ok => N, :changed => N, :obsolete => N, :incomplete => N, :untranslated => N, :fuzzy => N, :progress => N}
     def stat
       stat = {
         :total => @merge.size,
@@ -388,6 +435,7 @@ module I18n::Translate
         :changed => @merge.select{|e| e["flag"] == "changed"}.size,
         :incomplete => @merge.select{|e| e["flag"] == "incomplete"}.size,
         :untranslated => @merge.select{|e| e["flag"] == "untranslated"}.size,
+        :obsolete => @merge.select{|e| e["flag"] == "obsolete"}.size,
         :fuzzy => @merge.select{|e| e["flag"] != "ok"}.size
       }
       stat[:progress] = (stat[:ok].to_f / stat[:total].to_f) * 100

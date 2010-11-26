@@ -8,6 +8,7 @@ $KCODE='UTF8'
 require 'test/unit'
 require 'rubygems'
 require 'yaml'
+require 'pp'
 
 $:.unshift File.expand_path(File.join(File.dirname(__FILE__), ".."))
 require 'lib/i18n-translate'
@@ -64,7 +65,13 @@ def diff(src, trg)
     src.keys.each { |key| puts "src key: #{key}" unless trg.keys.include?(key) }
     trg.keys.each { |key| puts "trg key: #{key}" unless src.keys.include?(key) }
     src.keys.each do |key, value|
-      puts "#{key} #{src[key].inspect} != #{trg[key].inspect}" if src[key] != trg[key]
+      if src[key] != trg[key]
+        print "#{key}: "
+        pp src[key]
+        puts "!="
+        pp trg[key]
+      end
+      #puts "#{key} #{src[key].inspect} != #{trg[key].inspect}" if src[key] != trg[key]
     end
   elsif src.kind_of?(Array) and trg.kind_of?(Array)
     src.each {|k| puts "not in trg '#{k}'" unless trg.include?(k)}

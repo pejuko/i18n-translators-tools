@@ -121,7 +121,7 @@ module I18n::Translate
       # converts inspected string back into normal string
       def uninspect(str)
         return nil unless str
-        str.gsub(%r!\\([\\#"abefnrstvx]|u\d{4}|u\{[^\}]+\}|\d{1,3}|x\d{1,2}|cx|C-[a-zA-Z]|M-[a-zA-Z])!) do |m|
+        str.gsub(%r!\\([\\#"abefnrstvx]|u\d{4}|u\{[^\}]+\}|\d{1,3}|x\d{1,2}|cx|C-[a-zA-Z]|M-[a-zA-Z]| |=|:)!) do |m|
           repl = ""
           if ['\\', '#', '"'].include?($1)
             repl = $1

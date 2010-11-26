@@ -8,7 +8,7 @@ require 'rake/testtask'
 require 'rake/gempackagetask'
 require 'rake/clean'
 
-CLEAN << "coverage" << "pkg" << "README.html" << "CHANGELOG.html"
+CLEAN << "coverage" << "pkg" << "README.html" << "CHANGELOG.html" << '*.rbc'
 
 task :default => [:test, :doc, :gem]
 Rake::TestTask.new(:test) do |t|

@@ -8,6 +8,13 @@ module I18n::Translate::Processor
   class Properties < Template
     FORMAT = ['properties']
 
+    WHITE_SPACE = / |\n|\t|\f|\r|\\u0020|\\u0009|\\u000C/
+    ASSIGN = /(?:#{WHITE_SPACE})*?(?:=|:)(?:#{WHITE_SPACE})*/
+    KEY = /^((?:[^\\:=]|\\:|\\=|\\ )+?)/m
+    VALUE_MULTILINE = /(.*?(?:\\\\)*)\\$/
+    VALUE = /(.*?(?:\\\\)*$)/
+    VALUE_END = /([^=]+?(?:\\\\)*$)/
+
   protected
 
     def import(data)
@@ -15,44 +22,53 @@ module I18n::Translate::Processor
 
       key = nil
       value = nil
+      status = :first
       line_number = 0
       data.each_line do |line|
         line_number += 1
-        # skip empty line and comments
-        next if (line =~ %r{^\s*$}) or (line =~ %r{^#.*})
+        # skip empty line and comments (first non white character is # or !)
+        next if (line =~ %r{^(#{WHITE_SPACE})*$}) or (line =~ %r{^(#{WHITE_SPACE})*(#|!).*})
         
-        case line
         # multiline string
-        when %r{^([^=]+)\s*=\s*(.*)\\$}
-          key = $1.to_s.strip
-          value = $2.to_s.strip
+        if line[%r{#{KEY}#{ASSIGN}#{VALUE_MULTILINE}}] and (status == :first)
+          status = :inside
+          key = $1.to_s
+          value = $2.to_s
 
         # continuous multiline string
-        when %r{^\s*([^=]+)\\$}
-          value << $1.to_s.strip
+        elsif line[%r{^(?:#{WHITE_SPACE})*#{VALUE_MULTILINE}}] and (status == :inside)
+          value << $1.to_s
 
         # end of continuous string
-        when %r{^\s*([^=]+)$}
+        elsif line[%r{^(?:#{WHITE_SPACE})*#{VALUE_END}$}] and (status == :inside)
           value << $1.to_s.strip
-          I18n::Translate.set(key, uninspect(value), hash, @translate.options[:separator])
+          I18n::Translate.set(uninspect(key), uninspect(value), hash, @translate.options[:separator])
           value = nil
+          status = :first
 
         # simple key = value
-        when %r{^([^=]+)\s*=\s*(.*)$}
+        elsif line[%r{#{KEY}#{ASSIGN}#{VALUE}}]
           key, value = $1.to_s.strip, $2.to_s.strip
-          I18n::Translate.set(key, uninspect(value), hash, @translate.options[:separator])
+          I18n::Translate.set(uninspect(key), uninspect(value), hash, @translate.options[:separator])
+
+         # empty key
+        elsif line[/#{KEY}$/]
+          key = $1.to_s.strip
+          value = ""
+          I18n::Translate.set(uninspect(key), uninspect(value), hash, @translate.options[:separator])
+        else
+          puts "*** not match: '#{line}'"
         end
       end
 
       {@lang => hash}
     end
 
-
     # this export ignores data
     def export(data)
       target = data[@translate.lang]
       str = ""
-      keys = I18n::Translate.hash_to_keys(@translate.default).sort
+      keys = I18n::Translate.hash_to_keys(target).sort
 
       keys.each do |key|
         value = @translate.find(key, target)
@@ -61,13 +77,13 @@ module I18n::Translate::Processor
 
 
         if value.kind_of?(String)
-          entry = value.strip
+          entry = value
         else
-          entry = value["translation"].to_s.strip
+          entry = value["translation"].to_s
         end
 
         # create record in format: key = value
-        str << key << " = " << entry.gsub("\n", "\\n") << "\n"
+        str << key.gsub(/( |:|=)/){|m| "\\#{m}"} << " = " << entry.gsub("\n", "\\n") << "\n"
       end
 
       str

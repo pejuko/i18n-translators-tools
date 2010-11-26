@@ -51,6 +51,8 @@ options:
   --quiet, -q                         -- show less information
   --verbose, -v                       -- shows more information during
                                          locales processing
+  --hard, -h                          -- deletes from target files all missing keys in default
+                                         normaly those keys are kept but flag is set to obsolete
 
 
 CONFIG FILE
@@ -184,7 +186,8 @@ opts = GetoptLong.new(
   ["--encoding", "-e", GetoptLong::REQUIRED_ARGUMENT],
   ["--verbose", "-v", GetoptLong::NO_ARGUMENT],
   ["--quiet", "-q", GetoptLong::NO_ARGUMENT],
-  ["--locale", "-l", GetoptLong::REQUIRED_ARGUMENT]
+  ["--locale", "-l", GetoptLong::REQUIRED_ARGUMENT],
+  ["--hard", "-h", GetoptLong::NO_ARGUMENT]
 )
 
 
@@ -214,6 +217,8 @@ opts.each do |opt, val|
     tmp[optkey] = val
   when :deep
     tmp[optkey] = val
+  when :hard
+    tmp[:merge] = "hard"
   when :verbose
     tmp[:verbose] = true
     tmp[:quiet] = false

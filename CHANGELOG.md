@@ -1,4 +1,15 @@
-v 0.2.3
+v0.2.4
+======
+
+* enhanced support for java properties
+* hard/soft merges. hard deletes deleted keys in target and soft set them to
+  obsolete
+* processors now generate keys list from provided data and not from @tr.default
+* flag obsolete added
+* delete function
+
+
+v0.2.3
 =======
 
 * fix: hash_to_keys can work with enhanced format => default can be in
