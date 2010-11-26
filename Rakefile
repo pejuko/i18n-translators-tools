@@ -23,6 +23,12 @@ task :rcov do |t|
   system "rcov  --exclude .rvm,lib/ruby --sort coverage --text-summary --text-coverage-diff -o coverage  test/all.rb"
 end
 
+desc "Benchmark processors"
+task :bench do |t|
+  system "ruby benchmark/gettext_scan.rb"
+  system "ruby benchmark/gettext_reg.rb"
+end
+
 begin
   require 'bluecloth'
 

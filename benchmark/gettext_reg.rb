@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'lib/i18n-translate'
+require './lib/i18n-translate'
 require 'pp'
 
 opts = {:locale_dir => 'test/locale/src', :locale => 'cze', :format => 'po', :default => 'cze'}

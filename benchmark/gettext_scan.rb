@@ -1,6 +1,6 @@
 require 'rubygems'
-require 'lib/i18n-translate'
-require 'lib/i18n/processor/gettext_strscan'
+require './lib/i18n-translate'
+require './lib/i18n/processor/gettext_strscan'
 require 'pp'
 
 opts = {:locale_dir => 'test/locale/src', :locale => 'cze', :format => 'po', :default => 'cze'}
