@@ -28,7 +28,7 @@ module I18n
 
         return nil if tr.to_s.empty?
 
-        values = options.except(*I18n::Backend::Base::RESERVED_KEYS)
+        values = options.except(*RESERVED_KEYS)
 
         tr = resolve(locale, key, tr, options)
         tr = interpolate(locale, tr, values) if values

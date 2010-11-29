@@ -26,7 +26,7 @@ class TestBackendProperties < Test::Unit::TestCase
   end
 
   def test_1030_key_without_assign_and_value
-    assert_equal( "translation missing: cze, empty_key", I18n.t("empty_key") )
+    assert_equal( "translation missing: cze.empty_key", I18n.t("empty_key") )
   end
 
 end
