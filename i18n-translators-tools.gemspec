@@ -15,7 +15,7 @@ spec = Gem::Specification.new do |s|
   s.name = 'i18n-translators-tools'
   s.version = '0.2.4'
   s.date = Time.now.strftime("%Y-%m-%d")
-  s.add_dependency('i18n', '>= 0.4.1')
+  s.add_dependency('i18n', '>= 0.5.0')
   s.add_dependency('ya2yaml')
   s.require_path = 'lib'
   s.files = ["bin/i18n-translate", "README.md", "i18n-translators-tools.gemspec", "Rakefile"]
@@ -75,6 +75,7 @@ Changelog:
     * processors now generate keys list from provided data and not from @tr.default
     * flag obsolete added
     * delete function
+    * i18n-0.5.0 compatibility (for older i18n user v0.2.3)
 
 For more information read README.md and CHANGELOG.md
 

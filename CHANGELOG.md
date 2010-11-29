@@ -7,6 +7,7 @@ v0.2.4
 * processors now generate keys list from provided data and not from @tr.default
 * flag obsolete added
 * delete function
+* i18n-0.5.0 compatibility
 
 
 v0.2.3
