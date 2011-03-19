@@ -250,6 +250,9 @@ module I18n::Translate
       raise "Translate#[key]: wrong key '#{key}'" unless d
 
       entry = {"key" => key, "default" => d}
+      if d.kind_of? Hash
+        entry["default"] = d["translation"] || d["t"] || d["default"]
+      end
       
       # translation doesn't exist
       trg = I18n::Translate.find(key, @target, @options[:separator])
