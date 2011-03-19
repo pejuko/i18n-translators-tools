@@ -20,7 +20,7 @@ def print_help
   convert     -- convert from -f format to -c format
   strip       -- throw away translation metadata from locales and makes them
                  compatible again with I18n::Backend::Simple
-  translate   -- simple console translator; --language must be set
+  translate   -- simple console translator; --locale must be set
 
 
 options:
