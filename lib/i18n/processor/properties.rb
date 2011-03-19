@@ -20,6 +20,8 @@ module I18n::Translate::Processor
     def import(data)
       hash = {}
 
+      sep = @translate.options[:separator]
+      plus_key = sep+"translation"
       key = nil
       value = nil
       status = :first
@@ -42,20 +44,20 @@ module I18n::Translate::Processor
         # end of continuous string
         elsif line[%r{^(?:#{WHITE_SPACE})*#{VALUE_END}$}] and (status == :inside)
           value << $1.to_s.strip
-          I18n::Translate.set(uninspect(key), uninspect(value), hash, @translate.options[:separator])
+          I18n::Translate.set(uninspect(key)+plus_key, uninspect(value), hash, sep)
           value = nil
           status = :first
 
         # simple key = value
         elsif line[%r{#{KEY}#{ASSIGN}#{VALUE}}]
           key, value = $1.to_s.strip, $2.to_s.strip
-          I18n::Translate.set(uninspect(key), uninspect(value), hash, @translate.options[:separator])
+          I18n::Translate.set(uninspect(key)+plus_key, uninspect(value), hash, sep)
 
          # empty key
         elsif line[/#{KEY}\s*/]
           key = $1.to_s.strip
           value = ""
-          I18n::Translate.set(uninspect(key), uninspect(value), hash, @translate.options[:separator])
+          I18n::Translate.set(uninspect(key)+plus_key, uninspect(value), hash, sep)
         else
           puts "*** not match: '#{line}'"
         end
@@ -66,6 +68,7 @@ module I18n::Translate::Processor
 
     # this export ignores data
     def export(data)
+      sep = @translate.options[:separator]
       target = data[@translate.lang]
       str = ""
       keys = I18n::Translate.hash_to_keys(target).sort
@@ -82,8 +85,11 @@ module I18n::Translate::Processor
           entry = value["translation"].to_s
         end
 
+        k = key
+        k = $1 if k =~ /(.*)#{Regexp.escape sep}translation$/
+
         # create record in format: key = value
-        str << key.gsub(/( |:|=)/){|m| "\\#{m}"} << " = " << entry.gsub("\n", "\\n") << "\n"
+        str << k.gsub(/( |:|=)/){|m| "\\#{m}"} << " = " << entry.gsub("\n", "\\n") << "\n"
       end
 
       str

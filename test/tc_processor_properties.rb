@@ -19,7 +19,7 @@ class TestProcessorProperties < Test::Unit::TestCase
     data = data['cze']
     str = "Interpolovaný text '%{var}'"
     #diff(str, data["extended"]["interpolation"])
-    assert_equal( str, data["extended"]["interpolation"] )
+    assert_equal( str, data["extended"]["interpolation"]["translation"] )
   end
 
   def test_0020_write
