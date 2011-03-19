@@ -110,19 +110,19 @@ module I18n::Translate::Processor
         I18n::Translate.set(key, entry, hash, @translate.options[:separator])
       end
 
-      {@translate.lang => hash}
+      {@lang => hash}
     end
 
 
     def export(data)
-      target = data[@translate.lang]
+      target = data[@lang]
       str = ""
       keys = I18n::Translate.hash_to_keys(target).sort
 
       str << %~msgid ""\n~
       str << %~msgstr ""\n~
       str << %~"Content-Type: text/plain; charset=#{@translate.options[:encoding]}\\n"\n~
-      str << %~"X-Language: #{@translate.lang}\\n"\n~
+      str << %~"X-Language: #{@lang}\\n"\n~
       keys.each do |key|
         entry = [""]
         value = @translate.find(key, target)
