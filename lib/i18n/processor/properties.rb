@@ -69,7 +69,7 @@ module I18n::Translate::Processor
     # this export ignores data
     def export(data)
       sep = @translate.options[:separator]
-      target = data[@translate.lang]
+      target = data[@lang]
       str = ""
       keys = I18n::Translate.hash_to_keys(target).sort
 
