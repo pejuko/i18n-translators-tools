@@ -52,7 +52,7 @@ module I18n::Translate::Processor
           I18n::Translate.set(uninspect(key), uninspect(value), hash, @translate.options[:separator])
 
          # empty key
-        elsif line[/#{KEY}$/]
+        elsif line[/#{KEY}\s*/]
           key = $1.to_s.strip
           value = ""
           I18n::Translate.set(uninspect(key), uninspect(value), hash, @translate.options[:separator])
