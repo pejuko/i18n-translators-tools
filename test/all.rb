@@ -3,7 +3,7 @@
 # 
 # @author: Petr Kovar <pejuko@gmail.com>
 #
-$KCODE='UTF8'
+$KCODE='UTF8' if RUBY_VERSION < "1.9"
 
 require 'test/unit'
 require 'rubygems'

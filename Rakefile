@@ -2,7 +2,7 @@
 # vi: fenc=utf-8:expandtab:ts=2:sw=2:sts=2
 # 
 # @author: Petr Kovar <pejuko@gmail.com>
-$KCODE='UTF8'
+$KCODE='UTF8' if RUBY_VERSION < "1.9"
 
 require 'rake/testtask'
 require 'rake/gempackagetask'
