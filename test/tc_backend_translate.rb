@@ -13,4 +13,7 @@ class TestBackendTranslate < Test::Unit::TestCase
 
   include I18n::Test::Backend
 
+  def test_1000_returns_hash
+    assert_equal( {:interpolation=>"Interpolated text '%{var}'"}, I18n.t("extended", :locale => "default") )
+  end
 end
