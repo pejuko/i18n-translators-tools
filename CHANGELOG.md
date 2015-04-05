@@ -1,3 +1,8 @@
+v0.2.5
+======
+* fix recursive directory scan (-r and --deep options should work now)
+* enables usage require 'i18n-translators-tools'
+
 v0.2.4
 ======
 

@@ -5,7 +5,7 @@
 $KCODE='UTF8' if RUBY_VERSION < "1.9"
 
 require 'rake/testtask'
-require 'rake/gempackagetask'
+require 'rubygems/package_task'
 require 'rake/clean'
 
 CLEAN << "coverage" << "pkg" << "README.html" << "CHANGELOG.html" << '*.rbc'
@@ -16,7 +16,7 @@ Rake::TestTask.new(:test) do |t|
   t.verbose = true
 end
 
-Rake::GemPackageTask.new(eval(File.read("i18n-translators-tools.gemspec"))) {|pkg|}
+Gem::PackageTask.new(eval(File.read("i18n-translators-tools.gemspec"))) {|pkg|}
 
 desc "Test with rcov"
 task :rcov do |t| 

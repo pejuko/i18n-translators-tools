@@ -90,7 +90,7 @@ rescue
 end
 
 require 'i18n'
-require 'i18n-translate'
+require 'i18n-translators-tools'
 
 
 # converts from one file format to another
