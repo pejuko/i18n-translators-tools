@@ -216,7 +216,7 @@ opts.each do |opt, val|
     end
     tmp[optkey] = val
   when :deep
-    tmp[optkey] = val
+    tmp[optkey] = true
   when :hard
     tmp[:merge] = "hard"
   when :verbose
