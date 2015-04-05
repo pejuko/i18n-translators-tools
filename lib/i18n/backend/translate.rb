@@ -18,22 +18,39 @@ module I18n
       # wrapper which can work with both format
       # the simple and the Translator's
       def translate(locale, key, options = {})
-        result = super(locale, key, options)
-        return nil if result.kind_of?(String) and result.empty?
-        return result unless result.kind_of?(Hash)
-        return result unless result[:t] or result[:translation] or result[:default]
+        raise InvalidLocale.new(locale) unless locale
+        entry = key && lookup(locale, key, options[:scope], options)
+        entry = translate_to_i18n(entry)
 
-        tr = result[:translation] || result[:t]
-        tr = result[:default] if tr.to_s.empty?
+        if options.empty?
+          entry = resolve(locale, key, entry, options)
+        else
+          count, default = options.values_at(:count, :default)
+          values = options.except(*RESERVED_KEYS)
+          entry = entry.nil? && default ?
+              default(locale, key, default, options) : resolve(locale, key, entry, options)
+        end
 
-        return nil if tr.to_s.empty?
+        throw(:exception, I18n::MissingTranslation.new(locale, key, options)) if entry.nil?
+        entry = entry.dup if entry.is_a?(String)
 
-        values = options.except(*RESERVED_KEYS)
+        entry = pluralize(locale, entry, count) if count
+        entry = translate_to_i18n(entry) # after pluralization there can be enhanced format
+        entry = entry.dup if entry.is_a?(String)
+        entry = interpolate(locale, entry, values) if values
 
-        tr = resolve(locale, key, tr, options)
-        tr = interpolate(locale, tr, values) if values
+        #throw(:exception, I18n::MissingTranslation.new(locale, key, options)) if entry.to_s.empty?
 
-        tr
+        entry
+      end
+
+      protected
+
+      def translate_to_i18n(entry)
+        if entry.is_a?(Hash) && (entry[:translation] || entry[:t] || entry[:default])
+          entry = entry[:translation] || entry[:t] || entry[:default]
+        end
+        entry
       end
 
     end # module Backend::Translator

@@ -13,9 +13,9 @@ spec = Gem::Specification.new do |s|
   s.email = "pejuko@gmail.com"
   s.authors = ["Petr Kovar"]
   s.name = 'i18n-translators-tools'
-  s.version = '0.2.5'
+  s.version = '0.2.6'
   s.date = Time.now.strftime("%Y-%m-%d")
-  s.add_dependency('i18n', '>= 0.5.0')
+  s.add_dependency('i18n', '>= 0.7.0')
   s.add_dependency('ya2yaml')
   s.require_path = 'lib'
   s.files = ["bin/i18n-translate", "README.md", "i18n-translators-tools.gemspec", "Rakefile"]
@@ -52,6 +52,9 @@ Functions:
   * statistics
 
 Changelog:
+  v0.2.6
+    * compatible with i18n 0.7.0
+    * make it works with rails 4.2
   v0.2.5
     * fix recursive directory scan (-r and --deep options should work now)
     * enables usage require 'i18n-translators-tools'

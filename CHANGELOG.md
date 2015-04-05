@@ -1,3 +1,8 @@
+v0.2.6
+======
+* compatibility with i18n-0.7.0
+* make it works with rails 4.2
+
 v0.2.5
 ======
 * fix recursive directory scan (-r and --deep options should work now)
