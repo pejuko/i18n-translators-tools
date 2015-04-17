@@ -55,8 +55,10 @@ module I18n::Translate::Processor
           fuzzy = get(message, "translation", "type").to_s.strip
           entry["flag"] = fuzzy if fuzzy == "obsolete"
           entry["fuzzy"] = true unless fuzzy.empty?
-          flag = get(message, "extra-po-flags").to_s.strip
-          entry["flag"] = flag unless flag.empty?
+          if entry["fuzzy"]
+            flag = get(message, "extra-po-flags").to_s.strip
+            entry["flag"] = flag unless flag.empty?
+          end
           entry.delete_if {|k,v| v.to_s.empty?}
           if key
             # not key means it can be header of po file converted to ts

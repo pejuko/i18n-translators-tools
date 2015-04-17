@@ -1,3 +1,7 @@
+v0.2.7
+======
+* fix reading .ts file
+
 v0.2.6
 ======
 * compatibility with i18n-0.7.0
