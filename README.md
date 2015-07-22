@@ -115,13 +115,22 @@ Installation
 
     gem install i18n-translators-tools
 
-**Latest from sources***
+**Latest from sources**
 
     git clone git://github.com/pejuko/i18n-translators-tools.git
     cd i18n-translators-tools
     rake gem
     gem install pkg/i18n-translators-tools.gem
+    
+**Rails**
 
+in `Gemfile` add
+
+    gem 'i18n-translators-tools'
+
+then run
+
+    bundle install
 
 How to add support into your application
 ----------------------------------------
@@ -164,6 +173,48 @@ and won't work.
 It is hightly recommended to use Fallbacks backend together with
 Translate. If you have experienced nil or empty translations due to
 untranslated strings this can fix the problem.
+
+**Rails**
+
+Your `config/application.rb` should look like this
+
+```ruby
+require File.expand_path('../boot', __FILE__)
+
+require 'rails/all'
+
+# Require the gems listed in Gemfile, including any gems
+# you've limited to :test, :development, or :production.
+Bundler.require(*Rails.groups)
+
+I18n::Backend::Simple.send(:include, I18n::Backend::Translate)
+I18n::Backend::Simple.send(:include, I18n::Backend::TS)
+I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
+
+module MyApplication
+  class Application < Rails::Application
+    # Settings in config/environments/* take precedence over those specified here.
+    # Application configuration should go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded.
+
+    # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
+    # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
+    # config.time_zone = 'Central Time (US & Canada)'
+
+    # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
+    # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
+    # config.i18n.default_locale = :de
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.yml').to_s]
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.ts').to_s]
+    config.i18n.default_locale = :en
+
+    # Do not swallow errors in after_commit/after_rollback callbacks.
+    config.active_record.raise_in_transactional_callbacks = true
+  end
+end
+```
+
+This config file is adding support for TS files.
 
 
 Examples
@@ -305,7 +356,7 @@ handle them but Translate backend can.
 
 
 Configure file format
--------------------
+---------------------
 
 Configuration files are normal ruby files which should return hash.
 It is not necessary to use all switches.
