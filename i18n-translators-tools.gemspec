@@ -13,7 +13,7 @@ spec = Gem::Specification.new do |s|
   s.email = "pejuko@gmail.com"
   s.authors = ["Petr Kovar"]
   s.name = 'i18n-translators-tools'
-  s.version = '0.2.7'
+  s.version = '0.2.8'
   s.date = Time.now.strftime("%Y-%m-%d")
   s.add_dependency('i18n', '>= 0.7.0')
   s.add_dependency('ya2yaml')
@@ -21,6 +21,7 @@ spec = Gem::Specification.new do |s|
   s.files = ["bin/i18n-translate", "README.md", "i18n-translators-tools.gemspec", "Rakefile"]
   s.files += Dir["lib/**/*.rb", "test/**/*.{rb,yml,po}"]
   s.executables = ["i18n-translate"]
+=begin
   s.post_install_message = <<EOF
 =============================================================================
 
@@ -94,6 +95,7 @@ http://github.com/pejuko/i18n-translators-tools
 
 =============================================================================
 EOF
+=end
   s.description = <<EOF
 This package brings you useful utility and library which can help you to handle
 locale files and translations in your Ruby projects.
