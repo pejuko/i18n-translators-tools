@@ -90,7 +90,7 @@ module I18n::Translate
     path = key.to_s.split(separator)
     path.each do |key|
       h = h[key]
-      return nil unless h
+      return nil if h.nil?
     end
     h
   end
@@ -247,7 +247,7 @@ module I18n::Translate
     #   }
     def [](key)
       d = I18n::Translate.find(key, @default, @options[:separator])
-      raise "Translate#[key]: wrong key '#{key}'" unless d
+      raise "Translate#[key]: wrong key '#{key}'" if d.nil?
 
       entry = {"key" => key, "default" => d}
       if d.kind_of? Hash
