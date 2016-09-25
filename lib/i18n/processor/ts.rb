@@ -85,7 +85,7 @@ EOF
         value = @translate.find(key, target)
         next unless value
 
-        if value.kind_of?(String)
+        if value.kind_of?(String) || value.kind_of?(Array) || value.kind_of?(Integer)
           fuzzy = (value.to_s.empty?) ? %~ type="unfinished"~ : ""
           xml += <<EOF
     <context>

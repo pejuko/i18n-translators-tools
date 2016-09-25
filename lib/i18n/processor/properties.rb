@@ -79,8 +79,8 @@ module I18n::Translate::Processor
         entry = ""
 
 
-        if value.kind_of?(String)
-          entry = value
+        if value.kind_of?(String) || value.kind_of?(Array) || value.kind_of?(Integer)
+          entry = value.to_s
         else
           entry = value["translation"].to_s
         end

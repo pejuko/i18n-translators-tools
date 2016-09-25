@@ -127,8 +127,7 @@ module I18n::Translate::Processor
         entry = [""]
         value = @translate.find(key, target)
         next unless value
-
-        if value.kind_of?(String)
+        if value.kind_of?(String) || value.kind_of?(Array) || value.kind_of?(Integer)
           # leave out msgctxt if using po strings as a key
           default = @translate.find(key, @translate.default)
           entry << %~msgctxt #{key.inspect}~ if key != default
